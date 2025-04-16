@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'JetBrainsMono Nerd';
+  src: url('../fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+samp {
+    font-size: 14px;
+}
+
+html {
+    background-color: #3c3e3f;
+    color: white;
+    font-family: 'JetBrainsMono Nerd Font';
+}

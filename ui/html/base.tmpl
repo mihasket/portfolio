@@ -1,0 +1,17 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel='stylesheet' href='/static/css/main.css'>
+        <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
+        <title>{{template "title" .}} - Miha Šket</title>
+    </head>
+    <body>
+        <main>
+            {{template "main" .}}
+        </main>
+        <footer>Powered by <a href='https://golang.org/'>Go</a></footer>
+    </body>
+</html>
+{{end}}
