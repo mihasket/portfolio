@@ -1,0 +1,27 @@
+{{define "waybar"}}
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="modules-left" style="display: flex;">
+            {{ template "modules" .ModulesLeft }}
+        </div>
+
+        <div class="modules-center" style="display: flex;">
+            {{ template "modules" .ModulesCenter }}
+        </div>
+
+        <div class="modules-right" style="display: flex;">
+            {{ template "modules" .ModulesRight }}
+        </div>
+    </div>
+{{end}}
+
+{{define "modules"}}
+    {{range .}}
+        {{if eq .HtmlID "window"}}
+            <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket 󰌽 </div>
+        {{else if eq .HtmlID "workspaces"}}
+            <div id="{{ .HtmlID }}">{{range .Buttons}}<button>{{ . }}</button>{{end}}</div>
+        {{else}}
+            <div id="{{ .HtmlID }}">{{ .GetFormat }}</div>
+        {{end}}
+    {{end}}
+{{end}}

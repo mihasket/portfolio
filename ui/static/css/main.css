@@ -1,16 +1,72 @@
-@font-face {
-  font-family: 'JetBrainsMono Nerd';
-  src: url('../fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+* {
+    font-size: 16px;
+}
+
+html {
+    color: white;
+    font-family: 'JetBrainsMono Nerd Font';
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url('https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/Wallpaper/wallpaper.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+font-face {
+    font-family: 'JetBrainsMono Nerd';
+    src: url('../fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
 samp {
     font-size: 14px;
 }
 
-html {
-    background-color: #3c3e3f;
-    color: white;
-    font-family: 'JetBrainsMono Nerd Font';
+div,
+.modules-left,
+.modules-center,
+.modules-right {
+    font-size: 18px;
+}
+
+#window,
+.modules-right {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+#workspaces {
+    padding: 0 20px 0 20px;
+}
+
+#workspaces button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+#workspaces button:hover {
+    background-color: #81A1C1;
+}
+
+.kitty {
+    background-color: #1E222ACC;
+    border-style: solid;
+    border-color: #678EAC;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: fit-content;
 }
