@@ -1,18 +1,34 @@
 {{define "title"}}Home{{end}}
 
 {{define "main"}}
-    <div class="kitty">
-        <h2>Software developer</h2>
-        <p>
-        <samp>Hello, I'm Miha :)</samp><br>
-        <br>
-        <samp>Currently learning C, Rust, Go<br><br></samp>
-        <samp>I really like old technology and 2000's style websites.<br></samp>
-        <samp>Love playing sports and reading.<br></samp>
-        </p>
+    <div style="display: flex; width: 100%; height: 100%;">
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%">
+            <div class="kitty">
+                <p>
+                <samp>> Software developer</samp><br>
+                <samp>> Hello, I'm Miha :)</samp><br>
+                <br>
+                <samp>> Currently learning C, Rust, Go<br><br></samp>
+                <samp>> I really like old technology and 2000's style websites.<br></samp>
+                <samp>> Love playing sports and reading.<br></samp>
+                </p>
 
-        <samp>Work in progress<br></samp>
-
-        <img src="/static/img/favicon.ico">
+                <img src="/static/img/favicon.ico">
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+            <div class="kitty">
+            <pre>
+       /\         miha@mp3
+      /  \        os     Arch Linux
+     /\   \       host   MS-7C56 1.0
+    /      \      kernel 6.12.24-1-lts
+   /   ,,   \     uptime 5h 1m
+  /   |  |  -\    pkgs   1119
+ /_-''    ''-_\   memory 4640M / 32020M
+</pre>
+            <p>> pfetch </p>
+            </div>
+        </div>
     </div>
 {{end}}

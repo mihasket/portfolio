@@ -1,14 +1,14 @@
 {{define "waybar"}}
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div class="modules-left" style="display: flex;">
+    <div style="position: relative; display: flex; justify-content: space-between; align-items: center;">
+        <div class="modules-left" style="display: flex; z-index: 1;">
             {{ template "modules" .ModulesLeft }}
         </div>
 
-        <div class="modules-center" style="display: flex;">
+        <div class="modules-center" style="display: flex; position: absolute; left: 50%; transform: translateX(-50%); z-index: 0;">
             {{ template "modules" .ModulesCenter }}
         </div>
 
-        <div class="modules-right" style="display: flex;">
+        <div class="modules-right" style="display: flex; z-index: 1;">
             {{ template "modules" .ModulesRight }}
         </div>
     </div>
@@ -17,7 +17,7 @@
 {{define "modules"}}
     {{range .}}
         {{if eq .HtmlID "window"}}
-            <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket 󰌽 </div>
+            <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket  </div>
         {{else if eq .HtmlID "workspaces"}}
             <div id="{{ .HtmlID }}">{{range .Buttons}}<button>{{ . }}</button>{{end}}</div>
         {{else}}
