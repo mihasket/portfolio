@@ -1,5 +1,6 @@
 {{define "waybar"}}
-    <div style="position: relative; display: flex; justify-content: space-between; align-items: center;">
+
+    <div id="waybar" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
         <div class="modules-left" style="display: flex; z-index: 1;">
             {{ template "modules" .ModulesLeft }}
         </div>
@@ -12,6 +13,15 @@
             {{ template "modules" .ModulesRight }}
         </div>
     </div>
+
+    <script>
+        const path = window.location.pathname;
+        console.log(path);
+        if (path === "/") {
+            document.getElementById("workspaceButton1").style.color = "#e6e6e6";
+            console.log("yessir");
+        }
+    </script>
 {{end}}
 
 {{define "modules"}}
@@ -19,9 +29,9 @@
         {{if eq .HtmlID "window"}}
             <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket  </div>
         {{else if eq .HtmlID "workspaces"}}
-            <div id="{{ .HtmlID }}">{{range .Buttons}}<button>{{ . }}</button>{{end}}</div>
+            <div id="{{ .HtmlID }}">{{range .Buttons}}<button id="workspaceButton{{ . }}">{{ . }}</button>{{end}}</div>
         {{else}}
-            <div id="{{ .HtmlID }}">{{ .GetFormat }}</div>
+            <div id="{{ .HtmlID }}" style="padding: 0px 6px;">{{ .GetFormat }}</div>
         {{end}}
     {{end}}
 {{end}}

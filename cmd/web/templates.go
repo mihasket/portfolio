@@ -64,7 +64,7 @@ func (c ClockModule) GetFormat() string {
 	now := time.Now()
 	clockTime = timefmt.Format(now, clockTime)
 
-	return strings.Join([]string{clockIcon, clockTime}, "")
+	return strings.Join([]string{clockIcon, clockTime}, " ")
 }
 
 type WindowModule struct {

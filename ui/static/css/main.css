@@ -14,7 +14,7 @@ html, body {
 }
 
 body {
-    background-image: url('https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/Wallpaper/wallpaper.jpg');
+    background: linear-gradient(to bottom, #a3b7f3, #7a9df4);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -25,10 +25,6 @@ font-face {
     src: url('../fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-
-samp {
-    font-size: 14px;
 }
 
 div,
@@ -61,7 +57,7 @@ div,
     background-color: #81A1C1;
 }
 
-.kitty {
+.terminal {
     background-color: #1E222ACC;
     border-style: solid;
     border-color: #678EAC;
@@ -70,3 +66,10 @@ div,
     padding: 10px;
     width: fit-content;
 }
+
+.terminal p,
+.terminal samp,
+.terminal pre {
+    font-size: 22px;
+}
+
