@@ -67,9 +67,42 @@ div,
     width: fit-content;
 }
 
+.terminal a:link {
+    color: #b48ead;
+    text-decoration: none;
+}
+
+.terminal a:visited {
+    color: #b48ead;
+    text-decoration: none;
+}
+
+.terminal a:hover {
+    color: #d49bd1;
+    text-decoration: underline;
+}
+
 .terminal p,
 .terminal samp,
-.terminal pre {
+.terminal pre,
+.terminal a,
+.terminal span {
     font-size: 22px;
 }
 
+/* Animation for blinking */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.blinking-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1em;
+    background-color: white;
+    margin-left: 8px;
+    animation: blink 1s steps(1) infinite;
+    vertical-align: middle;
+}

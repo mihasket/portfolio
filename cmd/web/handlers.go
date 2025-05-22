@@ -40,6 +40,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		"./ui/html/base.tmpl",
 		"./ui/html/pages/home.tmpl",
 		"./ui/html/pages/waybar.tmpl",
+		"./ui/html/pages/zsh.tmpl",
 	}
 
 	ts, err := template.ParseFiles(files...)

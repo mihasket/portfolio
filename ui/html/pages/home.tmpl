@@ -4,28 +4,36 @@
     <div style="display: flex; width: 100%; height: 100%;">
         <div style="display: flex; justify-content: center; align-items: center; width: 100%">
             <div class="terminal">
+                {{ template "zsh" "myself" }}
                 <p>
-                <samp>> Software developer</samp><br>
-                <samp>> Hello, I'm Miha :)</samp><br>
+                <samp>Software developer</samp><br>
+                <samp>Hello, I'm Miha :)</samp><br>
                 <br>
-                <samp>> Currently learning C, Rust, Go<br><br></samp>
-                <samp>> I really like old technology and 2000's style websites.<br></samp>
-                <samp>> Love playing sports and reading.<br></samp>
+                <samp>Currently learning C, Rust, Go<br><br></samp>
+                <samp>I really like old technology and 2000's style websites.<br></samp>
+                <samp>Love lifting weights and reading.<br></samp>
+
+                <samp>This website is meant to replicate the look of my linux desktop.<br></samp>
+                <samp>It is synced with my <a href="https://github.com/mihasket/dotfiles">@dotfiles</a>.<br></samp>
+                <samp>So when I push changes, the website gets a new look ^_^<br></samp>
                 </p>
 
                 <img src="/static/img/favicon.ico">
+
+                {{ template "zsh" "" }}
             </div>
         </div>
         <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
             <div class="terminal">
+                {{ template "zsh" "pfetch" }}
 <pre>   __
 -=(o '.       miha@mp3
    '.-.\      os      Golang
    /|  \\     host    mihasket
    '|  ||     ascii   snd
     _\_):,_   bar     waybar
-            </pre>
-            <p>> ifetch</p>
+</pre>
+                {{ template "zsh" "" }}
             </div>
         </div>
     </div>
