@@ -25,8 +25,6 @@ func newTemplateCache() (map[string]*template.Template, error) {
 			page,
 		}
 
-		// poglej kaj potem tu naredi v files spremenljivki
-
 		ts, err := template.ParseFiles(files...)
 		if err != nil {
 			return nil, err

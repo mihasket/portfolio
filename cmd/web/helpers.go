@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -33,6 +35,29 @@ func (app *application) render(w http.ResponseWriter, r *http.Request, status in
 	if err != nil {
 		app.serverError(w, r, err)
 	}
+}
+
+func (app *application) fetchWaybar() (*WaybarJSON, error) {
+	res, err := http.Get("https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/.config/waybar/config.jsonc")
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var waybar WaybarJSON
+	err = json.Unmarshal(body, &waybar)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &waybar, nil
 }
 
 func sortModules(m []string, waybar WaybarJSON) []Module {

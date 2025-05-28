@@ -1,0 +1,90 @@
+{{define "title"}}Projects{{end}}
+
+{{define "main"}}
+        <style>
+            .tmux-left {
+                background-color: #5e81ac;
+                padding: 5px;
+                border-top-left-radius: 20px;
+                border-bottom-left-radius: 20px;
+                padding-left: 20px;
+            }
+            .tmux-middle {
+                background-color: #5e81ac;
+                padding: 5px;
+            }
+
+            .tmux-right {
+                background-color: #5e81ac;
+                padding: 5px;
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+            }
+        </style>
+
+        <div class="terminal" style="flex: 1; display: flex; flex-direction: column; width: 100%; padding: 40px;">
+            <div style="flex: 1; display: flex; background-color: #1E222A50; border-radius: 10px;">
+                <div style="width: 10%; border-right-style: solid ; border-color: #191d2455; padding: 20px;">
+                    <p>Projects</p>
+
+                    <div>
+                        <button style="all: unset;">
+                            <span style="color: #ebcb8b;">󰉋</span> mp3-tagger
+                        </button>
+
+                        <button style="all: unset;">
+                            <span style="color: #ebcb8b;">󰉋</span> sfetch
+                        </button>
+
+                        <button style="all: unset;">
+                            <span style="color: #ebcb8b;">󰉋</span> chip8 emulator
+                        </button>
+
+                        <button style="all: unset;">
+                            <span style="color: #ebcb8b;">󰉋</span> pnappa/CLImage
+                        </button>
+                    </div>
+                </div>
+
+                <div style="flex-grow: 1; margin-left: 20px; padding: 20px;">
+                    <p>Project information</p>
+                </div>
+            </div>
+
+            <div style="display: flex; padding-top: 20px; justify-content: space-between;">
+                <div style="display: flex;">
+                    <span class="tmux-left">0</span>
+                    <span class="tmux-right" style="width: 10px;"></span>
+
+                    <span class="tmux-left" style="background-color: #81a1c1; margin-left: 10px;">0</span>
+                    <span class="tmux-middle" style="background-color: #81a1c1;">| nvim *</span>
+                    <span class="tmux-right" style="background-color: #81a1c1; width: 10px;"></span>
+
+                    <span class="tmux-left" style="margin-left: 10px;">1</span>
+                    <span class="tmux-middle">| zsh *</span>
+                    <span class="tmux-right" style="width: 10px;"></span>
+                </div>
+
+                <div style="display: flex;">
+                    <span class="tmux-left" id="tmuxDate" style="background-color: #4c566a;"></span>
+                    <span class="tmux-middle" style="background-color: #4c566a;">|</span>
+                    <span class="tmux-middle" id="tmuxTime" style="background-color: #4c566a; padding-right: 10px;"></span>
+                    <span class="tmux-right" style="background-color: #81a1c1; padding-left: 20px; padding-right: 20px">mp3</span>
+                </div>
+            </div>
+        </div>
+
+        <script>
+                let now = new Date();
+                const offset = now.getTimezoneOffset();
+                now = new Date(now.getTime() - (offset*60*1000));
+                const date = now.toISOString().split('T')[0];
+
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const time = `${hours}:${minutes}`;
+
+                document.getElementById("tmuxDate").innerText = date;
+                document.getElementById("tmuxTime").innerText = time;
+        </script>
+{{end}}

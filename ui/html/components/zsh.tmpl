@@ -1,7 +1,7 @@
 {{define "zsh"}}
 <script>
 document.querySelectorAll('.path').forEach(el => {
-    el.textContent = " " + path;
+    el.innerText = " " + (path === "/" ? "~" : path);
 });
 </script>
 

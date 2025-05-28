@@ -1,5 +1,4 @@
 {{define "waybar"}}
-
     <div id="waybar" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
         <div class="modules-left" style="display: flex; z-index: 1;">
             {{ template "modules" .ModulesLeft }}
@@ -20,15 +19,31 @@
         if (path === "/") {
             document.getElementById("workspaceButton1").style.color = highlight;
         }
+        else if(path === "/projects/") {
+            document.getElementById("workspaceButton2").style.color = highlight;
+        }
+
+        function changeRoute(id) {
+            switch(id) {
+                case 1:
+                    window.location.href='/';
+                    break;
+                case 2:
+                    window.location.href='/projects/';
+                    break;
+                default:
+                    console.log(id);
+            }
+        }
     </script>
 {{end}}
 
 {{define "modules"}}
     {{range .}}
         {{if eq .HtmlID "window"}}
-            <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket  </div>
+            <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket 󰌽 </div>
         {{else if eq .HtmlID "workspaces"}}
-            <div id="{{ .HtmlID }}">{{range .Buttons}}<button id="workspaceButton{{ . }}">{{ . }}</button>{{end}}</div>
+            <div id="{{ .HtmlID }}">{{range .Buttons}}<button id="workspaceButton{{ . }}" onClick="changeRoute({{ . }})">{{ . }}</button>{{end}}</div>
         {{else}}
             <div id="{{ .HtmlID }}" style="padding: 0px 6px;">{{ .GetFormat }}</div>
         {{end}}

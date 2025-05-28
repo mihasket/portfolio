@@ -8,11 +8,11 @@
         <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
         <title>{{template "title" .}} - Miha Šket</title>
     </head>
-    <body>
+    <body style="display: flex; flex-direction: column; height: 100%">
         <header>
             {{template "waybar" .}}
         </header>
-        <main style="height: 95%;">
+        <main style="flex: 1; display: flex;">
             {{template "main" .}}
         </main>
     </body>
