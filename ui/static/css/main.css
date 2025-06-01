@@ -14,7 +14,7 @@ html, body {
 }
 
 body {
-    background: linear-gradient(to bottom, #a3b7f3, #7a9df4);
+    background: linear-gradient(to bottom, #6c82b1, #4c6bb8);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -58,7 +58,7 @@ div,
 }
 
 .terminal {
-    background-color: #1E222ACC;
+    background-color: #14140fCC;
     border-style: solid;
     border-color: #678EAC;
     border-radius: 10px;

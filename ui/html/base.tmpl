@@ -15,6 +15,12 @@
         <main style="flex: 1; display: flex;">
             {{template "main" .}}
         </main>
+
+        <script>
+            document.querySelectorAll('.path').forEach(el => {
+                el.innerText = " " + (path === "/" ? "~" : path);
+            });
+        </script>
     </body>
 </html>
 {{end}}
