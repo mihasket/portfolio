@@ -6,6 +6,24 @@
                 background-color: #5e81ac;
                 padding: 5px 20px;
             }
+            .display-img {
+                height: auto;
+                max-width: 100%;
+                border-style: solid;
+                border-radius: 10px;
+                border-color: #678EAC;
+            }
+            .project-content {
+                display: none;
+            }
+            .active {
+                display: block;
+                margin-left: 20px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
         </style>
 
         <div class="terminal" style="flex: 1; display: flex; flex-direction: column; width: 100%; padding: 40px;">
@@ -14,26 +32,51 @@
                     <p>Projects</p>
 
                     <div>
-                        <button style="all: unset;">
-                            <span style="color: #ebcb8b;">󰉋</span> mp3-tagger
-                        </button>
+                        {{ template "ProjectButton" "mp3-tagger" }}
 
-                        <button style="all: unset;">
-                            <span style="color: #ebcb8b;">󰉋</span> sfetch
-                        </button>
+                        {{ template "ProjectButton" "sfetch" }}
 
-                        <button style="all: unset;">
-                            <span style="color: #ebcb8b;">󰉋</span> chip8 emulator
-                        </button>
-
-                        <button style="all: unset;">
-                            <span style="color: #ebcb8b;">󰉋</span> pnappa/CLImage
-                        </button>
+                        {{ template "ProjectButton" "chip8-emulator" }}
                     </div>
                 </div>
 
-                <div style="flex-grow: 1; margin-left: 20px; padding: 20px;">
-                    <p>Project information</p>
+                <div id="project-area" style="width: 100%;">
+                    <div id="mp3-tagger" class="project-content">
+                        <div style="display: flex; align-items: center;">
+                            <a style="font-size: 28px" href="https://github.com/mihasket/mp3-tagger/">@mp3-tagger</a>
+                            <span style="color: #b48ead; font-size: 40px; margin-left: 20px;"></span>
+                        </div>
+                        <p>A C++ program for ID3v2.3 MP3 tagging modifies, or writes metadata in MP3 audio files according to the ID3v2.3 specification.</p>
+                        <p>These tags include information like title, artist, album, year, genre, etc.</p>
+
+                        <div style="display: flex; justify-content: center;">
+                            <img class="display-img" src="/static/img/mp3-tagger-example.png">
+                        </div>
+                    </div>
+
+                    <div id="sfetch" class="project-content">
+                        <div style="display: flex; align-items: center;">
+                            <a style="font-size: 28px" href="https://github.com/mihasket/sfetch/">@sfetch</a>
+                            <span style="color: #b48ead; font-size: 40px; margin-left: 20px;"></span>
+                        </div>
+                        <p>Command-line tool for displaying spotify artist and album information.</p>
+
+                        <div style="display: flex; justify-content: center;">
+                            <img class="display-img" style="max-width: 60%;" src="/static/img/sfetch-example.png">
+                        </div>
+                    </div>
+
+                    <div id="chip8-emulator" class="project-content">
+                        <div style="display: flex; align-items: center;">
+                            <a style="font-size: 28px" href="https://github.com/mihasket/chip8/">@chip8</a>
+                            <span style="color: #b48ead; font-size: 40px; margin-left: 20px;"></span>
+                        </div>
+                        <p>A Rust program for a CHIP-8 emulator simulates the CHIP-8 virtual machine, which is a simple, interpreted programming language used in the 1970s for early gaming systems.</p>
+
+                        <div style="display: flex; justify-content: center;">
+                            <img class="display-img" style="max-width: 60%;" src="/static/img/chip8-example.png">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -62,5 +105,15 @@
                 const time = `${hours}:${minutes}`;
 
                 document.getElementById("tmuxDate").innerText = `${date} | ${time}`;
+
+                function showProject(projectName) {
+                    const contents = document.querySelectorAll('.project-content');
+                    contents.forEach(div => div.classList.remove('active'));
+
+                    const selected = document.getElementById(projectName);
+                    if (selected) {
+                        selected.classList.add('active');
+                    }
+                }
         </script>
 {{end}}

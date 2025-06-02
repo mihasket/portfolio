@@ -14,7 +14,8 @@ html, body {
 }
 
 body {
-    background: linear-gradient(to bottom, #6c82b1, #4c6bb8);
+    /* background: linear-gradient(to bottom, #6c82b1, #4c6bb8); */
+    background-color: #222a3c;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
