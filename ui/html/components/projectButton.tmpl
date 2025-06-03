@@ -1,5 +1,18 @@
 {{define "ProjectButton" }}
-<button onClick="showProject({{ . }})" style="all: unset; width: 100%">
-    <span style="color: #ebcb8b;">󰉋</span> {{ . }}
+<style>
+.projectButton {
+    all: unset;
+    width: 100%;
+    font-size: 20px;
+    padding-left: 30px;
+}
+
+.projectButton::hover {
+    color: blue;
+}
+</style>
+
+<button onClick="showProject({{ . }})" class="projectButton">
+    <span style="color: #ebcb8b;"></span> <span style="color: #7ca4c7; font-size: 20px;">{{ . }}</span>
 </button>
 {{end}}

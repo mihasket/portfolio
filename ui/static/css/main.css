@@ -41,7 +41,7 @@ div,
     padding: 0 20px 0 20px;
 }
 
-#workspaces button {
+button {
     background-color: transparent;
     background-repeat: no-repeat;
     border: none;
@@ -55,7 +55,7 @@ div,
 }
 
 .terminal {
-    background-color: rgba(30, 34, 42, 0.8); /* translucent dark */
+    background-color: rgba(20, 20, 15, 0.8);
     backdrop-filter: blur(20px);            /* adds the blur behind */
     -webkit-backdrop-filter: blur(20px);
     border-style: solid;
