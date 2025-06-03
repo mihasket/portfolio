@@ -5,20 +5,30 @@
         <div style="display: flex; justify-content: center; align-items: center; width: 100%">
             <div class="terminal">
                 {{ template "zsh" "myself" }}
-                <p>
-                <samp>Software developer</samp><br>
-                <samp>Hello, I'm Miha :)</samp><br>
-                <br>
-                <samp>Currently learning C, Rust, Go<br><br></samp>
-                <samp>I really like old technology and 2000's style websites.<br></samp>
-                <samp>Love lifting weights and reading.<br></samp>
+                <div style="display: flex; align-items: center;">
+                    <a href="https://github.com/mihasket/">@github</a>
+                    <span style="color: #b48ead; font-size: 28px; margin-left: 10px;"></span>
+                </div>
 
-                <samp>This website is meant to replicate the look of my linux desktop.<br></samp>
-                <samp>It is synced with my <a href="https://github.com/mihasket/dotfiles">@dotfiles</a>.<br></samp>
-                <samp>So when I push changes, the website gets a new look ^_^<br></samp>
+                <div style="display: flex; align-items: center;">
+                    <a href="mailto:sket.miha@proton.me">@mail</a>
+                    <span style="color: #b48ead; font-size: 28px; margin-left: 10px;">󰁥</span>
+                </div>
+
+                <div style="display: flex; align-items: center;">
+                    <a href="https://github.com/mihasket/">@linkedin</a>
+                    <span style="color: #b48ead; font-size: 28px; margin-left: 10px;"></span>
+                </div>
+
+                <div style="padding: 20px 0;">
+                    <samp>Software developer from Maribor, Slovenia.</samp><br>
+                    <samp>Currently learning Go, Rust and C.</samp><br>
+                    <samp>Love lifting weights and reading.</samp><br>
+                </div>
+
+                <p style="max-width: 800px; word-break: normal;">
+                    This website is made with Go and is designed to replicate the appearance of my Linux desktop environment, mainly <a href="https://github.com/Alexays/Waybar">@waybar</a>. It is fully synchronized with my <a href="https://github.com/mihasket/dotfiles">@dotfiles</a>, ensuring that any changes I push to my configuration are immediately reflected in the website’s look and feel.
                 </p>
-
-                <img src="/static/img/favicon.ico">
 
                 {{ template "zsh" "" }}
             </div>

@@ -16,9 +16,6 @@ html, body {
 body {
     /* background: linear-gradient(to bottom, #6c82b1, #4c6bb8); */
     background-color: #222a3c;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
 }
 
 font-face {
@@ -59,7 +56,9 @@ div,
 }
 
 .terminal {
-    background-color: #14140fCC;
+    background-color: rgba(20, 20, 15, 0.6); /* translucent dark */
+    backdrop-filter: blur(10px);            /* adds the blur behind */
+    -webkit-backdrop-filter: blur(10px);
     border-style: solid;
     border-color: #678EAC;
     border-radius: 10px;
