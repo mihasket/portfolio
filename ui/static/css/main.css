@@ -14,8 +14,7 @@ html, body {
 }
 
 body {
-    /* background: linear-gradient(to bottom, #6c82b1, #4c6bb8); */
-    background-color: #222a3c;
+    background: #5e81ac;
 }
 
 font-face {
@@ -52,13 +51,13 @@ div,
 }
 
 #workspaces button:hover {
-    background-color: #81A1C1;
+    background-color: #2a2d2e;
 }
 
 .terminal {
-    background-color: rgba(20, 20, 15, 0.6); /* translucent dark */
-    backdrop-filter: blur(10px);            /* adds the blur behind */
-    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(30, 34, 42, 0.8); /* translucent dark */
+    backdrop-filter: blur(20px);            /* adds the blur behind */
+    -webkit-backdrop-filter: blur(20px);
     border-style: solid;
     border-color: #678EAC;
     border-radius: 10px;
