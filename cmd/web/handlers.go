@@ -5,8 +5,6 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Server", "Go")
-
 	waybar, err := app.fetchWaybar()
 	if err != nil {
 		app.serverError(w, r, err)
@@ -16,8 +14,6 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) projects(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Server", "Go")
-
 	waybar, err := app.fetchWaybar()
 	if err != nil {
 		app.serverError(w, r, err)
