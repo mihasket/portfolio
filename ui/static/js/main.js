@@ -1,11 +1,10 @@
-// TODO: Organize this better
-const path = window.location.pathname;
+function homePage(path) {
+    document.querySelectorAll('.path').forEach(el => {
+        el.innerText = " " + (path === "/" ? "~" : path);
+    });
+}
 
-document.querySelectorAll('.path').forEach(el => {
-    el.innerText = " " + (path === "/" ? "~" : path);
-});
-
-if (path === '/projects') {
+function projectsPage() {
     const now = new Date();
     const date = now.toISOString().split('T')[0];
 
@@ -14,20 +13,30 @@ if (path === '/projects') {
     const time = `${hours}:${minutes}`;
 
     document.getElementById("tmuxDate").innerText = `${date} | ${time}`;
-}
 
-function showProject(projectName) {
-    const contents = document.querySelectorAll('.project-content');
-    contents.forEach(div => div.classList.remove('active'));
+    const projectButtons = document.querySelectorAll('.projectButton');
 
-    const selected = document.getElementById(projectName.replace(".md", ""));
-    if (selected) {
-        selected.classList.add('active');
-    }
-}
+    projectButtons.forEach(button => {
+        document.getElementById(button.id).addEventListener('click', () => {
+            const contents = document.querySelectorAll('.project-content');
+            contents.forEach(div => div.classList.remove('active'));
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.projectButton').forEach(el => {
-        document.getElementById(el.id).addEventListener('click', () => showProject(el.id));
+            const selected = document.getElementById(button.id.replace(".md", ""));
+            if (selected) {
+                selected.classList.add('active');
+            }
+        });
     });
+}
+
+// Main function
+document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname;
+
+    if (path === '/') {
+        homePage(path);
+    }
+    else if (path === '/projects/') {
+        projectsPage();
+    }
 });
