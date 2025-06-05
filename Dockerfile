@@ -11,6 +11,7 @@ RUN go build -o main ./cmd/web/
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
+RUN mkdir -p tls
 COPY --from=builder /app/main .
 COPY --from=builder /app/ui ./ui
 
