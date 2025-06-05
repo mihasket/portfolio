@@ -11,5 +11,5 @@ func (app *application) routes() http.Handler {
 	mux.HandleFunc("GET /{$}", app.home)
 	mux.HandleFunc("GET /projects/{$}", app.projects)
 
-	return commonHeaders(mux)
+	return app.logRequests(commonHeaders(mux))
 }
