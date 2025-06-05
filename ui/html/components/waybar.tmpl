@@ -1,41 +1,18 @@
 {{define "waybar"}}
-    <div id="waybar" style="position: relative; display: flex; justify-content: space-between; align-items: center;">
-        <div class="modules-left" style="display: flex; z-index: 1;">
+    <div id="waybar" class="waybar">
+        <div class="modules-left flex z-1">
             {{ template "modules" .ModulesLeft }}
         </div>
 
-        <div class="modules-center" style="display: flex; position: absolute; left: 50%; transform: translateX(-50%); z-index: 0;">
+        <div class="modules-center flex-abs-center">
             {{ template "modules" .ModulesCenter }}
         </div>
 
-        <div class="modules-right" style="display: flex; z-index: 1;">
+        <div class="modules-right flex z-1">
             {{ template "modules" .ModulesRight }}
         </div>
     </div>
 
-    <script>
-        const highlight = "#e6e6e6";
-        const path = window.location.pathname;
-        if (path === "/") {
-            document.getElementById("workspaceButton1").style.color = highlight;
-        }
-        else if(path === "/projects/") {
-            document.getElementById("workspaceButton2").style.color = highlight;
-        }
-
-        function changeRoute(id) {
-            switch(id) {
-                case 1:
-                    window.location.href='/';
-                    break;
-                case 2:
-                    window.location.href='/projects/';
-                    break;
-                default:
-                    console.log(id);
-            }
-        }
-    </script>
 {{end}}
 
 {{define "modules"}}
@@ -43,9 +20,12 @@
         {{if eq .HtmlID "window"}}
             <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket 󰌽 </div>
         {{else if eq .HtmlID "workspaces"}}
-            <div id="{{ .HtmlID }}">{{range .Buttons}}<button id="workspaceButton{{ . }}" onClick="changeRoute({{ . }})">{{ . }}</button>{{end}}</div>
+            <nav id="{{ .HtmlID }}" class="flex">
+                <a class="px-2" href="/">1</a>
+                <a class="px-2" href="/projects/">2</a>
+            </nav>
         {{else}}
-            <div id="{{ .HtmlID }}" style="padding: 0px 6px;">{{ .GetFormat }}</div>
+            <div id="{{ .HtmlID }}" class="px-2">{{ .GetFormat }}</div>
         {{end}}
     {{end}}
 {{end}}

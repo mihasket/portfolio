@@ -15,6 +15,162 @@ html, body {
 
 body {
     background: #5e81ac;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+main {
+    flex: 1;
+    display: flex;
+}
+
+.homeMainDiv {
+    flex: 1;
+    display: flex;
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+}
+
+.flex-center-x {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center-100 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.flex-abs-center {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+.purple-span-icon {
+    color: #b48ead;
+    font-size: 28px;
+    margin-left: 10px;
+}
+
+.purple {
+    color: #b48ead !important;
+}
+
+.yellow {
+    color: #ebcb8b !important;
+}
+
+.orange {
+    color: #d08770 !important;
+}
+
+.blue {
+    color: #81a1c1 !important;
+}
+
+.bg-blue {
+    background-color: #81a1c1 !important;
+}
+
+.green {
+    color: #a3be8c !important;
+}
+
+.bg-gray {
+    background-color: #4c566a !important;
+}
+
+.nord-white {
+    color: #eceff4 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.pr-1 {
+    padding-right: 4px !important;
+}
+
+.p-5 {
+    padding: 20px !important;
+}
+
+.py-5 {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+.px-2 {
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.ml-5 {
+    margin-left: 20px !important;
+}
+
+.ml-3 {
+    margin-left: 12px !important;
+}
+
+.w-25-p {
+    width: 25% !important;
+}
+
+.max-w-50-p {
+    max-width: 50% !important;
+}
+
+.max-w-80-p {
+    max-width: 80% !important;
+}
+
+.f-size-5 {
+    font-size: 20px !important;
+}
+
+.f-size-7 {
+    font-size: 28px !important;
+}
+
+.f-size-10 {
+    font-size: 40px !important;
+}
+
+.z-1 {
+    z-index: 1 !important;
+}
+
+.websiteInfo {
+    max-width: 800px;
+    word-break: normal;
+}
+
+.whitespace-pre-line {
+    white-space: pre-line;
 }
 
 font-face {
@@ -41,16 +197,29 @@ div,
     padding: 0 20px 0 20px;
 }
 
-button {
+nav a{
     background-color: transparent;
     background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     overflow: hidden;
     outline: none;
+    padding: 4px;
+    text-decoration: none;
+    height: max-content;
 }
 
-#workspaces button:hover {
+nav a:link {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+nav a:visited {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#workspaces a:hover {
     background-color: #2a2d2e;
 }
 
@@ -104,4 +273,74 @@ button {
     margin-left: 8px;
     animation: blink 1s steps(1) infinite;
     vertical-align: middle;
+}
+
+.waybar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tmux {
+    background-color: #5e81ac;
+    padding: 5px 20px;
+}
+
+.display-img {
+    height: auto;
+    max-width: 100%;
+    border: 0px solid;
+    border-radius: 10px;
+}
+
+.project-content {
+    display: none;
+}
+
+.active {
+    display: block;
+    margin-left: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#project-area {
+    width: 100%;
+    background-color: #2e3440;
+    border-style: solid;
+    border-color: #191d2455;
+    border-radius: 10px;
+}
+
+.nvim {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-width: 800px;
+    max-width: 1200px;
+    min-height: 600px;
+    max-height: 700px;
+    padding: 20px;
+}
+
+.projectButton {
+    all: unset;
+    width: 100%;
+    font-size: 20px;
+    padding-left: 30px;
+}
+
+.projectButton::hover {
+    color: blue;
+}
+
+.tmux-div {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    background-color: #434c5e;
 }

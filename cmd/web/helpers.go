@@ -86,7 +86,6 @@ func sortModules(m []string, waybar WaybarJSON) []Module {
 			modules = append(modules, waybar.Window)
 		case "hyprland/workspaces":
 			waybar.Workspace.HtmlID = "workspaces"
-			waybar.Workspace.Buttons = []int{1, 2, 3, 4, 5}
 			modules = append(modules, waybar.Workspace)
 		}
 	}

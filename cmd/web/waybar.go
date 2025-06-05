@@ -77,9 +77,8 @@ func (w WindowModule) GetFormat() string {
 }
 
 type WorkspaceModule struct {
-	Format  string `json:"format"`
-	Buttons []int
-	HtmlID  string
+	Format string `json:"format"`
+	HtmlID string
 }
 
 func (w WorkspaceModule) GetFormat() string {

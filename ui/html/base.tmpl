@@ -8,19 +8,16 @@
         <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
         <title>{{template "title" .}} - Miha Šket</title>
     </head>
-    <body style="display: flex; flex-direction: column; height: 100%">
+    <body>
         <header>
             {{template "waybar" .}}
         </header>
-        <main style="flex: 1; display: flex;">
+
+        <main>
             {{template "main" .}}
         </main>
 
-        <script>
-            document.querySelectorAll('.path').forEach(el => {
-                el.innerText = " " + (path === "/" ? "~" : path);
-            });
-        </script>
+        <script src='/static/js/main.js' type='text/javascript'></script>
     </body>
 </html>
 {{end}}
