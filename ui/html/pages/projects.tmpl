@@ -11,6 +11,8 @@
                         </p>
 
                         <div>
+                            {{ template "ProjectButton" "portfolio.md" }}
+
                             {{ template "ProjectButton" "mp3-tagger.md" }}
 
                             {{ template "ProjectButton" "sfetch.md" }}
@@ -61,6 +63,18 @@
 
                             <div class="flex-center-x">
                                 <img class="display-img max-w-80-p" src="/static/img/chip8-example.png">
+                            </div>
+                        </div>
+
+                        <div id="portfolio" class="project-content">
+                            <div class="flex-center">
+                                <a class="f-size-7" href="https://github.com/mihasket/portfolio/">@portfolio</a>
+                                <span class="purple f-size-10 ml-5"></span>
+                            </div>
+                            <p>This website was built with Go. If you want more details about how it works, check out the repository.</p>
+
+                            <div class="flex-center-x">
+                                <img class="display-img" src="/static/img/favicon.ico">
                             </div>
                         </div>
                     </div>
