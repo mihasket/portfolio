@@ -1,1 +1,6 @@
 tmp/
+*.key
+*.crt
+*.pem
+certs/
+tls/
