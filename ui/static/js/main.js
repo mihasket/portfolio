@@ -5,31 +5,46 @@ function homePage(path) {
 }
 
 function projectsPage() {
+    updateTmuxDate();
+    setupProjectButtons();
+}
+
+function updateTmuxDate() {
+    const tmuxDateElement = document.getElementById("tmuxDate");
+    if (!tmuxDateElement) {
+        return
+    }
+
     const now = new Date();
     const date = now.toISOString().split('T')[0];
+    const time = now.toTimeString().slice(0, 5);
 
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const time = `${hours}:${minutes}`;
+    tmuxDateElement.innerText = `${date} | ${time}`;
+}
 
-    document.getElementById("tmuxDate").innerText = `${date} | ${time}`;
-
+function setupProjectButtons() {
     const projectButtons = document.querySelectorAll('.projectButton');
 
     projectButtons.forEach(button => {
-        document.getElementById(button.id).addEventListener('click', () => {
-            const contents = document.querySelectorAll('.project-content');
-            contents.forEach(div => div.classList.remove('active'));
-
-            const selected = document.getElementById(button.id.replace(".md", ""));
-            if (selected) {
-                selected.classList.add('active');
-            }
-        });
+        button.addEventListener('click', handleProjectButtonClick);
     });
 }
 
-// Main function
+function handleProjectButtonClick(event) {
+    const button = event.currentTarget;
+
+    document.querySelectorAll('.project-content').forEach(div => {
+        div.classList.remove('active');
+    });
+
+    const projectId = button.id.replace(".md", "");
+    const selectedContent = document.getElementById(projectId);
+
+    if (selectedContent) {
+        selectedContent.classList.add('active');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const path = window.location.pathname;
 
