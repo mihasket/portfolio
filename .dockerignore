@@ -1,4 +1,5 @@
 .git
+tls/
 tmp/
 .air.toml
 .gitignore
