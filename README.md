@@ -14,7 +14,7 @@ You can also use <a href="https://github.com/FiloSottile/mkcert">mkcert</a>.
 
 ## Local build
 
-You can use <a href="https://github.com/air-verse/air">air</a> for hot reloading.
+You can use <a href="https://github.com/air-verse/air">air</a> for live reloading.
 ```bash
 air
 ```
@@ -40,5 +40,6 @@ docker build -t portfolio .
 
 Run using:
 ```bash
+# where <path to your folder with certificates>:/root/tls
 docker run -p 8080:8080 -v ./tls:/root/tls portfolio
 ```
