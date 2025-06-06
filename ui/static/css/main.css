@@ -2,8 +2,8 @@
     font-size: 16px;
 }
 
-font-face {
-    font-family: 'JetBrainsMono Nerd', Fallback, sans-serif, monospace;
+@font-face {
+    font-family: 'JetBrainsMono Nerd';
     src: url('/static/fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
@@ -11,7 +11,7 @@ font-face {
 
 html {
     color: white;
-    font-family: 'JetBrainsMono Nerd';
+    font-family: 'JetBrainsMono Nerd', Fallback, sans-serif, monospace;
 }
 
 html, body {
