@@ -2,6 +2,13 @@
     font-size: 16px;
 }
 
+font-face {
+    font-family: 'JetBrainsMono Nerd';
+    src: url('/static/fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
     color: white;
     font-family: 'JetBrainsMono Nerd Font';
@@ -171,13 +178,6 @@ main {
 
 .whitespace-pre-line {
     white-space: pre-line;
-}
-
-font-face {
-    font-family: 'JetBrainsMono Nerd';
-    src: url('../fonts/JetBrainsMonoNerdFontRegular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
 }
 
 div,
