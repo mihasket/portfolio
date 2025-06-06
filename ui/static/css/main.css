@@ -9,6 +9,26 @@
     font-style: normal;
 }
 
+@media (max-width: 1024px) {
+    main, header {
+        display: none !important;
+    }
+
+    body {
+        background-color: #2e3440 !important;
+    }
+
+    .mobile {
+        padding: 2rem !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .mobile {
+        display: none !important;
+    }
+}
+
 html {
     color: white;
     font-family: 'JetBrainsMono Nerd Font', Fallback, sans-serif, monospace;
@@ -235,17 +255,17 @@ nav a:visited {
     width: fit-content;
 }
 
-.terminal a:link {
+a:link {
     color: #b48ead;
     text-decoration: none;
 }
 
-.terminal a:visited {
+a:visited {
     color: #b48ead;
     text-decoration: none;
 }
 
-.terminal a:hover {
+a:hover {
     color: #d49bd1;
     text-decoration: underline;
 }

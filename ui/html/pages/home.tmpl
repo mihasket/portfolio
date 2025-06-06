@@ -4,29 +4,7 @@
     <div class="homeMainDiv">
         <div class="flex-center-100">
             <div class="terminal">
-                {{ template "zsh" "myself" }}
-
-                <div class="flex-center">
-                    <a href="https://github.com/mihasket/">@github</a>
-                    <span class="purple f-size-7 ml-3"></span>
-                </div>
-
-                <div class="flex-center">
-                    <a href="mailto:sket.miha@proton.me">@mail</a>
-                    <span class="purple f-size-7 ml-3">󰁥</span>
-                </div>
-
-                <div class="py-5">
-                    <samp>Software developer from Maribor, Slovenia.</samp><br>
-                    <samp>Currently learning Go, Rust and C.</samp><br>
-                    <samp>Love lifting weights and reading.</samp><br>
-                </div>
-
-                <p class="websiteInfo">
-                    This website is made with Go and is designed to replicate the appearance of my Linux desktop environment, mainly <a href="https://github.com/Alexays/Waybar">@waybar</a>. It is fully synchronized with my <a href="https://github.com/mihasket/dotfiles">@dotfiles</a>, ensuring that any changes I push to my configuration are immediately reflected in the website’s look and feel.
-                </p>
-
-                {{ template "zsh" "" }}
+                {{ template "information" . }}
             </div>
         </div>
         <div class="flex-center-100">
