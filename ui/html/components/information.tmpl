@@ -3,12 +3,20 @@
 
 <div class="flex-center">
     <a href="https://github.com/mihasket/">@github</a>
-    <span class="purple f-size-7 ml-3"></span>
+    {{if eq . "desktop"}}
+        <span class="purple f-size-7 ml-3"></span>
+    {{else}}
+        <span class="purple f-size-4 ml-3"></span>
+    {{end}}
 </div>
 
 <div class="flex-center">
     <a href="mailto:sket.miha@proton.me">@mail</a>
-    <span class="purple f-size-7 ml-3">󰁥</span>
+    {{if eq . "desktop"}}
+        <span class="purple f-size-7 ml-3">󰁥</span>
+    {{else}}
+        <span class="purple f-size-4 ml-3">󰁥</span>
+    {{end}}
 </div>
 
 <div class="py-5">
