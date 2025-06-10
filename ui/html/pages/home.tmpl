@@ -9,14 +9,17 @@
         </div>
         <div class="flex-center-100">
             <div class="terminal">
-                {{ template "zsh" "pfetch" }}
-<pre>   __
--=(o '.       miha@mp3
-   '.-.\      os      Golang
-   /|  \\     host    mihasket
-   '|  ||     ascii   snd
-    _\_):,_   bar     waybar
-</pre>
+                {{ template "zsh" "latest-track" }}
+
+                <div class="flex">
+                    <img class="p-2 w-175px display-img" src="{{ (index (index .LastFM.RecentTracks.Track 0).Image 3).Text }}">
+                    <div class="p-2">
+                        <p class="whitespace-pre"><span class="blue">title</span>   {{ (index .LastFM.RecentTracks.Track 0).Name }}</p>
+                        <p class="whitespace-pre"><span class="blue">artist</span>  {{ (index .LastFM.RecentTracks.Track 0).Artist.Name }}</p>
+                        <p class="whitespace-pre"><span class="blue">album</span>   {{ (index .LastFM.RecentTracks.Track 0).Album.Text }}</p>
+                    </div>
+                </div>
+
                 {{ template "zsh" "" }}
             </div>
         </div>

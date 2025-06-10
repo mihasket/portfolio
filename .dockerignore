@@ -3,3 +3,4 @@ tls/
 tmp/
 .air.toml
 .gitignore
+.env*

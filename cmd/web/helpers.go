@@ -22,7 +22,7 @@ func (app *application) clientError(w http.ResponseWriter, status int) {
 	http.Error(w, http.StatusText(status), status)
 }
 
-func (app *application) render(w http.ResponseWriter, r *http.Request, status int, page string, data WaybarTmpl) {
+func (app *application) render(w http.ResponseWriter, r *http.Request, status int, page string, data templateData) {
 	ts, ok := app.templateCache[page]
 	if !ok {
 		err := fmt.Errorf("the template %s does not exist", page)
@@ -66,10 +66,36 @@ func (app *application) fetchWaybar() (*WaybarJSON, error) {
 	return &waybar, nil
 }
 
+func (app *application) fetchLastTrack() (*RecentTracksResponse, error) {
+	url := fmt.Sprintf(
+		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
+		app.config.lastFm.LAST_FM_USERNAME, app.config.lastFm.LAST_FM_API_KEY,
+	)
+
+	res, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var lastTrack RecentTracksResponse
+	err = json.Unmarshal(body, &lastTrack)
+	if err != nil {
+		return nil, err
+	}
+
+	return &lastTrack, nil
+}
+
 func sortModules(m []string, waybar WaybarJSON) []Module {
 	var modules []Module
 
-	// Tote "clock" spremenljivke lahko verjetno das v neki enum, ker se bo ponavljalo
 	for _, v := range m {
 		switch v {
 		case "clock":
@@ -93,12 +119,23 @@ func sortModules(m []string, waybar WaybarJSON) []Module {
 	return modules
 }
 
-func (app *application) generateTemplateData(waybar WaybarJSON) WaybarTmpl {
-	var data WaybarTmpl
+func (app *application) generateTemplateData(waybar WaybarJSON, lastTrack *RecentTracksResponse) templateData {
+	var data templateData
 
 	data.ModulesLeft = sortModules(waybar.ModulesLeft, waybar)
 	data.ModulesCenter = sortModules(waybar.ModulesCenter, waybar)
 	data.ModulesRight = sortModules(waybar.ModulesRight, waybar)
+
+	if lastTrack == nil {
+		return data
+	}
+
+	data.LastFM = *lastTrack
+
+	if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 24 {
+		data.LastFM.RecentTracks.Track[0].Album.Text =
+			data.LastFM.RecentTracks.Track[0].Album.Text[0:24] + "..."
+	}
 
 	return data
 }

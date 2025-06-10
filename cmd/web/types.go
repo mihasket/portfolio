@@ -18,9 +18,6 @@ type PulseAudioModule struct {
 }
 
 func (p PulseAudioModule) GetFormat() string {
-	// Dodaj scrol wheel na spletno stran
-	// da se volume ikona spremeni ko scrollas
-	// Pa mogoce onclick event da se naredi mute, ce bo slo
 	//  TODO: Error handling
 	//  What to return if there was an error, maybe
 
@@ -101,7 +98,7 @@ type WaybarJSON struct {
 	Workspace     WorkspaceModule  `json:"hyprland/workspaces"`
 }
 
-type WaybarTmpl struct {
+type templateData struct {
 	Layer         string
 	Position      string
 	Height        int
@@ -109,4 +106,27 @@ type WaybarTmpl struct {
 	ModulesLeft   []Module
 	ModulesCenter []Module
 	ModulesRight  []Module
+	LastFM        RecentTracksResponse
+}
+
+type RecentTracksResponse struct {
+	RecentTracks struct {
+		Track []struct {
+			Artist struct {
+				Name string `json:"#text"`
+			} `json:"artist"`
+			Image []struct {
+				Size string `json:"size"`
+				Text string `json:"#text"`
+			} `json:"image"`
+			Album struct {
+				Text string `json:"#text"`
+			} `json:"album"`
+			Name string `json:"name"`
+			Date struct {
+				Uts  string `json:"uts"`
+				Text string `json:"#text"`
+			} `json:"date"`
+		} `json:"track"`
+	} `json:"recenttracks"`
 }

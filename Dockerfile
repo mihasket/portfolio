@@ -16,4 +16,4 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/ui ./ui
 
 EXPOSE 8080
-CMD ["./main", "-addr=:8080"]
+CMD ["./main", "-addr=:8080", "-env=production"]
