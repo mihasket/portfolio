@@ -14,6 +14,7 @@
 
   body {
     background-color: #2e3440 !important;
+    background-image: none !important;
   }
 
   .mobile {
