@@ -2,25 +2,48 @@
 
 {{define "main"}}
     <div class="homeMainDiv">
-        <div class="flex-center-100">
-            <div class="terminal">
+        <div class="flex w-100-p">
+            <div class="terminal w-100-p">
                 {{ template "information" "desktop" }}
             </div>
         </div>
-        <div class="flex-center-100">
-            <div class="terminal">
-                {{ template "zsh" "latest-track" }}
+        <div class="flex flex-col w-100-p">
+            <div class="terminal h-100-p">
+                {{ template "zsh" "sfetch" }}
 
-                <div class="flex">
-                    <img class="p-2 w-175px display-img" src="{{ (index (index .LastFM.RecentTracks.Track 0).Image 3).Text }}">
+                <div class="flex items-center">
+                    <img class="p-2 display-img" src="{{ (index (index .LastFM.RecentTracks.Track 0).Image 3).Text }}">
                     <div class="p-2">
-                        <p class="whitespace-pre"><span class="blue">title</span>   {{ (index .LastFM.RecentTracks.Track 0).Name }}</p>
-                        <p class="whitespace-pre"><span class="blue">artist</span>  {{ (index .LastFM.RecentTracks.Track 0).Artist.Name }}</p>
-                        <p class="whitespace-pre"><span class="blue">album</span>   {{ (index .LastFM.RecentTracks.Track 0).Album.Text }}</p>
+                        <p><span class="blue">title</span>&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Name }}</p>
+                        <p><span class="blue">artist</span>&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Artist.Name }}</p>
+                        <p><span class="blue">album</span>&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Album.Text }}</p>
+                        {{ if (index .LastFM.RecentTracks.Track 0).Date.Text }}
+                            <p><span class="blue">date</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Date.Text }}</p>
+                        {{ else }}
+                            <p><span class="blue">date</span>&nbsp;&nbsp;&nbsp;&nbsp;right now!</p>
+                        {{ end }}
                     </div>
                 </div>
 
                 {{ template "zsh" "" }}
+            </div>
+            <div class="flex h-100-p">
+                <div class="terminal">
+                    {{ template "zsh" "pfetch" }}
+<pre>   __
+-=(o '.       miha@mp3
+   '.-.\      os      Golang
+   /|  \\     host    mihasket
+   '|  ||     ascii   snd
+    _\_):,_   bar     waybar
+</pre>
+                    {{ template "zsh" "" }}
+                </div>
+
+                <div class="terminal w-100-p">
+                    {{ template "zsh" "slime-gif" }}
+                    <img class="display-img" src="/static/img/slime.gif" alt="Moving slime">
+                </div>
             </div>
         </div>
     </div>
