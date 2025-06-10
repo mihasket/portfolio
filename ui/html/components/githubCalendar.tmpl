@@ -1,0 +1,21 @@
+{{define "GithubCalendar"}}
+    <div class="contribution-calendar">
+        <div class="contribution-stats">
+            <p class="p-0 m-0">{{.Total}} contributions in the last year.</p>
+            <p class="f-size-4">hint: hover to see the number!</p>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-grid">
+                {{range .Contributions}}
+                    {{range .}}
+                        <div class="day intensity-{{.Intensity}}" 
+                             title="{{.Count}} contributions on {{.Date}}"
+                             data-date="{{.Date}}" 
+                             data-count="{{.Count}}">
+                        </div>
+                    {{end}}
+                {{end}}
+            </div>
+        </div>
+    </div>
+{{end}}

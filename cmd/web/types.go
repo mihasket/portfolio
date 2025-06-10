@@ -99,14 +99,15 @@ type WaybarJSON struct {
 }
 
 type templateData struct {
-	Layer         string
-	Position      string
-	Height        int
-	Width         int
-	ModulesLeft   []Module
-	ModulesCenter []Module
-	ModulesRight  []Module
-	LastFM        RecentTracksResponse
+	Layer          string
+	Position       string
+	Height         int
+	Width          int
+	ModulesLeft    []Module
+	ModulesCenter  []Module
+	ModulesRight   []Module
+	LastFM         RecentTracksResponse
+	GithubCalendar GitHubCalendarResponse
 }
 
 type RecentTracksResponse struct {
@@ -129,4 +130,15 @@ type RecentTracksResponse struct {
 			} `json:"date"`
 		} `json:"track"`
 	} `json:"recenttracks"`
+}
+
+type GitHubCalendarResponse struct {
+	Total         int         `json:"total"`
+	Contributions [][]DayData `json:"contributions"`
+}
+
+type DayData struct {
+	Date      string `json:"date"`
+	Intensity string `json:"intensity"`
+	Count     int    `json:"count"`
 }

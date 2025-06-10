@@ -44,14 +44,14 @@ func (app *application) render(w http.ResponseWriter, r *http.Request, status in
 }
 
 func (app *application) fetchWaybar() (*WaybarJSON, error) {
-	res, err := http.Get("https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/.config/waybar/config.jsonc")
+	resp, err := http.Get("https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/.config/waybar/config.jsonc")
 	if err != nil {
 		return nil, err
 	}
 
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
-	body, err := io.ReadAll(res.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -72,14 +72,14 @@ func (app *application) fetchLastTrack() (*RecentTracksResponse, error) {
 		app.config.lastFm.LAST_FM_USERNAME, app.config.lastFm.LAST_FM_API_KEY,
 	)
 
-	res, err := http.Get(url)
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
 
-	defer res.Body.Close()
+	defer resp.Body.Close()
 
-	body, err := io.ReadAll(res.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -91,6 +91,28 @@ func (app *application) fetchLastTrack() (*RecentTracksResponse, error) {
 	}
 
 	return &lastTrack, nil
+}
+
+func (app *application) fetchGithubContribution() (*GitHubCalendarResponse, error) {
+	resp, err := http.Get(fmt.Sprintf("https://gh-calendar.rschristian.dev/user/%s", "mihasket"))
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var result GitHubCalendarResponse
+	err = json.Unmarshal(body, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }
 
 func sortModules(m []string, waybar WaybarJSON) []Module {
@@ -119,23 +141,26 @@ func sortModules(m []string, waybar WaybarJSON) []Module {
 	return modules
 }
 
-func (app *application) generateTemplateData(waybar WaybarJSON, lastTrack *RecentTracksResponse) templateData {
+func (app *application) generateTemplateData(waybar WaybarJSON, lastTrack *RecentTracksResponse, calendar *GitHubCalendarResponse) templateData {
 	var data templateData
 
 	data.ModulesLeft = sortModules(waybar.ModulesLeft, waybar)
 	data.ModulesCenter = sortModules(waybar.ModulesCenter, waybar)
 	data.ModulesRight = sortModules(waybar.ModulesRight, waybar)
 
+	// If nil == /projects/ route
 	if lastTrack == nil {
 		return data
 	}
 
 	data.LastFM = *lastTrack
 
-	if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 24 {
+	if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 30 {
 		data.LastFM.RecentTracks.Track[0].Album.Text =
-			data.LastFM.RecentTracks.Track[0].Album.Text[0:24] + "..."
+			data.LastFM.RecentTracks.Track[0].Album.Text[0:30] + "..."
 	}
+
+	data.GithubCalendar = *calendar
 
 	return data
 }

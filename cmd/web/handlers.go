@@ -15,7 +15,12 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 	}
 
-	app.render(w, r, http.StatusOK, "home.tmpl", app.generateTemplateData(*waybar, lastTrack))
+	calendar, err := app.fetchGithubContribution()
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+
+	app.render(w, r, http.StatusOK, "home.tmpl", app.generateTemplateData(*waybar, lastTrack, calendar))
 }
 
 func (app *application) projects(w http.ResponseWriter, r *http.Request) {
@@ -24,5 +29,5 @@ func (app *application) projects(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 	}
 
-	app.render(w, r, http.StatusOK, "projects.tmpl", app.generateTemplateData(*waybar, nil))
+	app.render(w, r, http.StatusOK, "projects.tmpl", app.generateTemplateData(*waybar, nil, nil))
 }
