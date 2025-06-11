@@ -5,6 +5,8 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
+	// fmt.Printf("r.UserAgent(): %v\n", r.UserAgent())
+
 	waybar, err := app.fetchWaybar()
 	if err != nil {
 		app.serverError(w, r, err)

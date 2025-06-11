@@ -25,7 +25,10 @@
                         <p><span class="blue">album</span>&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Album.Text }}</p>
                         <div class="flex">
                             {{ if (index .LastFM.RecentTracks.Track 0).Date.Text }}
-                                <p><span class="blue">date</span>&nbsp;&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Date.Text }}</p>
+                                <div class="flex-center-everything">
+                                    <span class="blue">date&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span>{{ (index .LastFM.RecentTracks.Track 0).Date.Text }}</span>
+                                </div>
                             {{ else }}
                                 <div class="flex-center-everything">
                                     <span class="blue">date&nbsp;&nbsp;&nbsp;</span>

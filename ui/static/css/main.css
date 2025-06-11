@@ -110,6 +110,10 @@ main {
   align-items: center;
 }
 
+.items-stretch {
+  align-items: stretch !important;
+}
+
 .purple-span-icon {
   color: #b48ead;
   font-size: 28px;
@@ -387,13 +391,9 @@ a:hover {
 
 .nvim {
   display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  min-width: 800px;
-  max-width: 1200px;
-  min-height: 600px;
-  max-height: 700px;
   padding: 20px;
 }
 
