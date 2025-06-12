@@ -33,3 +33,12 @@ func (app *application) projects(w http.ResponseWriter, r *http.Request) {
 
 	app.render(w, r, http.StatusOK, "projects.tmpl", app.generateTemplateData(*waybar, nil, nil))
 }
+
+func (app *application) terminal(w http.ResponseWriter, r *http.Request) {
+	waybar, err := app.fetchWaybar()
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+
+	app.render(w, r, http.StatusOK, "terminal.tmpl", app.generateTemplateData(*waybar, nil, nil))
+}

@@ -168,6 +168,10 @@ main {
   padding-right: 4px !important;
 }
 
+.pl-5 {
+  padding-left: 20px !important;
+}
+
 .py-5 {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
@@ -300,6 +304,39 @@ nav a:visited {
   border-radius: 10px;
   margin: 10px;
   padding: 10px;
+
+  animation: slidein 0.5s forwards;
+}
+
+.terminal.closing {
+  animation: slideout 0.4s forwards;
+  overflow: hidden;
+}
+
+@keyframes slidein {
+  from {
+    height: 0px;
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    height: var(--h);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideout {
+  from {
+    height: var(--h);
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    height: 0px;
+    transform: scale(0.95);
+    opacity: 0;
+  }
 }
 
 a:link {
@@ -321,6 +358,7 @@ a:hover {
 .terminal samp,
 .terminal pre,
 .terminal a,
+.terminal label,
 .terminal span {
   font-size: 22px;
 }
@@ -499,4 +537,8 @@ a:hover {
 
 .intensity-4 {
   background-color: #39d353;
+}
+
+input {
+  all: unset;
 }

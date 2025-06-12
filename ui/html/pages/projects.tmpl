@@ -1,97 +1,95 @@
 {{define "title"}}Projects{{end}}
 
 {{define "main"}}
-        <div class="flex-center-100 items-stretch">
-            <div class="terminal nvim">
-                <div class="flex flex-1">
-                    <div class="w-25-p p-5">
-                        <p class="p-0 m-0 f-size-5">
-                            <span class="yellow"></span>
-                            ~/code/projects
-                        </p>
+        <div class="terminal nvim">
+            <div class="flex flex-1">
+                <div class="w-25-p p-5">
+                    <p class="p-0 m-0 f-size-5">
+                        <span class="yellow"></span>
+                        ~/code/projects
+                    </p>
 
-                        <div>
-                            {{ template "ProjectButton" "portfolio.md" }}
+                    <div>
+                        {{ template "ProjectButton" "portfolio.md" }}
 
-                            {{ template "ProjectButton" "mp3-tagger.md" }}
+                        {{ template "ProjectButton" "mp3-tagger.md" }}
 
-                            {{ template "ProjectButton" "sfetch.md" }}
+                        {{ template "ProjectButton" "sfetch.md" }}
 
-                            {{ template "ProjectButton" "chip8.md" }}
+                        {{ template "ProjectButton" "chip8.md" }}
 
-                            {{ template "ProjectButton" "README.md" }}
-                        </div>
-                    </div>
-
-                    <div id="project-area">
-                        <div id="README" class="project-content active">
-                            <p>Projects</p>
-                            <p>Click on the markdown files to display the project!</p>
-                        </div>
-
-                        <div id="mp3-tagger" class="project-content">
-                            <div class="flex-center">
-                                <a class="f-size-7" href="https://github.com/mihasket/mp3-tagger/">@mp3-tagger</a>
-                                <span class="purple f-size-10 ml-5"></span>
-                            </div>
-                            <p>A C++ program for ID3v2.3 MP3 tagging modifies, or writes metadata in MP3 audio files according to the ID3v2.3 specification.<br><br>
-                            These tags include information like title, artist, album, year, genre, etc.</p>
-
-                            <div class="flex-center-x">
-                                <img class="display-img" src="/static/img/mp3-tagger-example.png">
-                            </div>
-                        </div>
-
-                        <div id="sfetch" class="project-content">
-                            <div class="flex-center">
-                                <a class="f-size-7" href="https://github.com/mihasket/sfetch/">@sfetch</a>
-                                <span class="purple f-size-10 ml-5"></span>
-                            </div>
-                            <p>A python CLI tool for displaying spotify artist and album information.</p>
-
-                            <div class="flex-center-x">
-                                <img class="display-img max-w-50-p" src="/static/img/sfetch-example.png">
-                            </div>
-                        </div>
-
-                        <div id="chip8" class="project-content">
-                            <div class="flex-center">
-                                <a class="f-size-7" href="https://github.com/mihasket/chip8/">@chip8</a>
-                                <span class="purple f-size-10 ml-5"></span>
-                            </div>
-                            <p>A Rust program for a CHIP-8 emulator simulates the CHIP-8 virtual machine, which is a simple, interpreted programming language used in the 1970s for early gaming systems.</p>
-
-                            <div class="flex-center-x">
-                                <img class="display-img max-w-80-p" src="/static/img/chip8-example.png">
-                            </div>
-                        </div>
-
-                        <div id="portfolio" class="project-content">
-                            <div class="flex-center">
-                                <a class="f-size-7" href="https://github.com/mihasket/portfolio/">@portfolio</a>
-                                <span class="purple f-size-10 ml-5"></span>
-                            </div>
-                            <p>This website was built with Go. If you want more details about how it works, check out the repository.</p>
-
-                            <div class="flex-center-x">
-                                <img class="display-img" src="/static/img/favicon.ico">
-                            </div>
-                        </div>
+                        {{ template "ProjectButton" "README.md" }}
                     </div>
                 </div>
 
-                <div class="tmux-div">
-                    <div class="flex">
-                        <span class="tmux bg-blue">0</span>
-
-                        <span class="tmux">0 | nvim *</span>
+                <div id="project-area">
+                    <div id="README" class="project-content active">
+                        <p>Projects</p>
+                        <p>Click on the markdown files to display the project!</p>
                     </div>
 
-                    <div class="flex">
-                        <span class="tmux bg-gray" id="tmuxDate"></span>
-                        <span class="tmux bg-blue">mp3</span>
+                    <div id="mp3-tagger" class="project-content">
+                        <div class="flex-center">
+                            <a class="f-size-7" href="https://github.com/mihasket/mp3-tagger/">@mp3-tagger</a>
+                            <span class="purple f-size-10 ml-5"></span>
+                        </div>
+                        <p>A C++ program for ID3v2.3 MP3 tagging modifies, or writes metadata in MP3 audio files according to the ID3v2.3 specification.<br><br>
+                        These tags include information like title, artist, album, year, genre, etc.</p>
+
+                        <div class="flex-center-x">
+                            <img class="display-img" src="/static/img/mp3-tagger-example.png">
+                        </div>
+                    </div>
+
+                    <div id="sfetch" class="project-content">
+                        <div class="flex-center">
+                            <a class="f-size-7" href="https://github.com/mihasket/sfetch/">@sfetch</a>
+                            <span class="purple f-size-10 ml-5"></span>
+                        </div>
+                        <p>A python CLI tool for displaying spotify artist and album information.</p>
+
+                        <div class="flex-center-x">
+                            <img class="display-img max-w-50-p" src="/static/img/sfetch-example.png">
+                        </div>
+                    </div>
+
+                    <div id="chip8" class="project-content">
+                        <div class="flex-center">
+                            <a class="f-size-7" href="https://github.com/mihasket/chip8/">@chip8</a>
+                            <span class="purple f-size-10 ml-5"></span>
+                        </div>
+                        <p>A Rust program for a CHIP-8 emulator simulates the CHIP-8 virtual machine, which is a simple, interpreted programming language used in the 1970s for early gaming systems.</p>
+
+                        <div class="flex-center-x">
+                            <img class="display-img max-w-80-p" src="/static/img/chip8-example.png">
+                        </div>
+                    </div>
+
+                    <div id="portfolio" class="project-content">
+                        <div class="flex-center">
+                            <a class="f-size-7" href="https://github.com/mihasket/portfolio/">@portfolio</a>
+                            <span class="purple f-size-10 ml-5"></span>
+                        </div>
+                        <p>This website was built with Go. If you want more details about how it works, check out the repository.</p>
+
+                        <div class="flex-center-x">
+                            <img class="display-img" src="/static/img/favicon.ico">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="tmux-div">
+                <div class="flex">
+                    <span class="tmux bg-blue">0</span>
+
+                    <span class="tmux">0 | nvim *</span>
+                </div>
+
+                <div class="flex">
+                    <span class="tmux bg-gray" id="tmuxDate"></span>
+                    <span class="tmux bg-blue">mp3</span>
+                </div>
+            </div>
+            </div>
 {{end}}
