@@ -86,8 +86,6 @@ function checkKeyboardShortcut(path) {
       keyBuffer = keyBuffer.slice(-2);
     }
 
-    console.log(keyBuffer);
-
     if (keyBuffer === "ot") {
       keyBuffer = "";
 
@@ -98,8 +96,6 @@ function checkKeyboardShortcut(path) {
 
       zshPath(path);
     } else if (keyBuffer === "qt" && activeTerminal) {
-      console.log("v qt funkciji");
-      console.log(activeTerminal);
       activeTerminal.classList.add("closing");
 
       activeTerminal.addEventListener(
