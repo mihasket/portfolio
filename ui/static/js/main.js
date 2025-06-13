@@ -1,6 +1,6 @@
 import { projectsPage } from "./projects.js";
 import { homePage } from "./home.js";
-import { terminalPage } from "./terminal.js";
+import { WindowManager } from "./tree.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (path === "/projects/") {
     projectsPage();
   } else if (path === "/terminal/") {
-    terminalPage(path);
+    const windowManager = new WindowManager("main");
+    windowManager.addTerminal();
   }
 });

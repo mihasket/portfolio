@@ -320,12 +320,10 @@ nav a:visited {
 
 @keyframes slidein {
   from {
-    height: 0px;
     transform: scale(0);
     opacity: 0;
   }
   to {
-    height: var(--h);
     transform: scale(1);
     opacity: 1;
   }
@@ -363,7 +361,7 @@ a:hover {
 .terminal samp,
 .terminal pre,
 .terminal a,
-.terminal label,
+.terminal input,
 .terminal span {
   font-size: 22px;
 }
