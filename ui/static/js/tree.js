@@ -22,6 +22,29 @@ export class WindowManager {
     this.setupKeyboardShortcuts();
   }
 
+  findNodeByElement(node, element) {
+    if (!node) return null;
+
+    if (node.type === "terminal" && node.dom === element) {
+      return node;
+    }
+
+    const leftResult = this.findNodeByElement(node.left, element);
+    if (leftResult) return leftResult;
+
+    return this.findNodeByElement(node.right, element);
+  }
+
+  setActiveTerminal(terminal) {
+    document.querySelectorAll(".terminal").forEach((t) => {
+      t.style.borderColor = "#a4a9b3";
+    });
+
+    terminal.style.borderColor = "#88c0d0";
+    terminal.focus();
+    this.activeNode = this.findNodeByElement(this.root, terminal);
+  }
+
   createTerminal() {
     if (this.terminalCount >= this.MAX_TERMINALS) {
       console.log("Maximum terminals reached");
