@@ -33,16 +33,10 @@ export function createZshPrompt() {
   const label = document.createElement("span");
   label.textContent = ">";
 
-  const input = document.createElement("input");
-  input.classList.add("pl-5");
-  input.type = "text";
-  input.id = "fname";
-  input.name = "fname";
-
   const cursor = document.createElement("span");
   cursor.classList.add("blinking-cursor");
 
-  inputLine.append(label, input, cursor);
+  inputLine.append(label, cursor);
 
   container.append(userLine, inputLine);
 

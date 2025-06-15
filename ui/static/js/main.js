@@ -11,6 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     projectsPage();
   } else if (path === "/terminal/") {
     const windowManager = new WindowManager("main");
-    windowManager.addTerminal();
+    windowManager.setupKeyboardShortcuts();
   }
 });

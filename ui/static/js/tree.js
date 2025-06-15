@@ -2,9 +2,9 @@ import { createZshPrompt } from "./helpers.js";
 
 class Node {
   constructor(type = "terminal", splitDirection = null) {
-    this.type = type; // 'terminal' or 'container'
-    this.splitDirection = splitDirection; // 'horizontal' or 'vertical' for containers
-    this.dom = null; // DOM element for terminals
+    this.type = type;
+    this.splitDirection = splitDirection;
+    this.dom = null;
     this.left = null;
     this.right = null;
     this.parent = null;
@@ -12,27 +12,74 @@ class Node {
 }
 
 export class WindowManager {
-  constructor(containerId) {
-    this.container = document.getElementById(containerId);
+  constructor(mainId) {
+    this.main = document.getElementById(mainId);
     this.root = null;
     this.activeNode = null;
     this.terminalCount = 0;
     this.MAX_TERMINALS = 4;
-
-    this.setupKeyboardShortcuts();
   }
 
-  findNodeByElement(node, element) {
-    if (!node) return null;
+  addTerminal() {
+    const terminal = this.createTerminal();
+    if (!terminal) return;
 
-    if (node.type === "terminal" && node.dom === element) {
-      return node;
+    const newTerminalNode = new Node("terminal");
+    newTerminalNode.dom = terminal;
+
+    // First terminal
+    if (!this.root) {
+      this.root = newTerminalNode;
+      this.main.appendChild(terminal);
+      this.activeNode = newTerminalNode;
+
+      this.setActiveTerminal(terminal);
+
+      return;
     }
 
-    const leftResult = this.findNodeByElement(node.left, element);
-    if (leftResult) return leftResult;
+    const nodeToSplit = this.findRightmostTerminal(this.root);
+    const splitDirection =
+      this.terminalCount % 2 === 0 ? "vertical" : "horizontal";
 
-    return this.findNodeByElement(node.right, element);
+    this.splitNode(nodeToSplit, newTerminalNode, splitDirection);
+    this.activeNode = newTerminalNode;
+    this.setActiveTerminal(newTerminalNode.dom);
+  }
+
+  splitNode(existingNode, newNode, splitDirection) {
+    const containerNode = new Node("container", splitDirection);
+    const container = this.createContainer(splitDirection);
+
+    containerNode.parent = existingNode.parent;
+    existingNode.parent = containerNode;
+    newNode.parent = containerNode;
+
+    containerNode.left = existingNode;
+    containerNode.right = newNode;
+
+    // Update the parent's reference to point to the new container
+    if (containerNode.parent) {
+      if (containerNode.parent.left === existingNode) {
+        containerNode.parent.left = containerNode;
+      } else {
+        containerNode.parent.right = containerNode;
+      }
+    } else {
+      this.root = containerNode;
+    }
+
+    const existingDOM = existingNode.dom;
+    const parentDOM = existingDOM.parentNode;
+
+    parentDOM.removeChild(existingDOM);
+
+    container.appendChild(existingDOM);
+    container.appendChild(newNode.dom);
+
+    parentDOM.appendChild(container);
+
+    containerNode.dom = container;
   }
 
   setActiveTerminal(terminal) {
@@ -45,6 +92,36 @@ export class WindowManager {
     this.activeNode = this.findNodeByElement(this.root, terminal);
   }
 
+  findNodeByElement(node, element) {
+    if (!node) return null;
+
+    if (node.type === "terminal" && node.dom === element) {
+      return node;
+    }
+
+    const leftResult = this.findNodeByElement(node.left, element);
+    if (leftResult) {
+      return leftResult;
+    }
+
+    return this.findNodeByElement(node.right, element);
+  }
+
+  findRightmostTerminal(node) {
+    if (!node) {
+      return null;
+    }
+
+    if (node.type === "terminal") {
+      return node;
+    }
+
+    return (
+      this.findRightmostTerminal(node.right) ||
+      this.findRightmostTerminal(node.left)
+    );
+  }
+
   createTerminal() {
     if (this.terminalCount >= this.MAX_TERMINALS) {
       console.log("Maximum terminals reached");
@@ -52,7 +129,7 @@ export class WindowManager {
     }
 
     const terminal = document.createElement("div");
-    terminal.classList.add("terminal", "w-100-p");
+    terminal.classList.add("terminal", "flex", "flex-1");
 
     terminal.appendChild(createZshPrompt());
 
@@ -60,64 +137,69 @@ export class WindowManager {
     return terminal;
   }
 
-  addTerminal() {
-    const terminal = this.createTerminal();
-    if (!terminal) return;
+  createContainer(splitDirection) {
+    const container = document.createElement("div");
+    container.classList.add("flex", "flex-1", "min-w-0-p", "min-h-0-p");
 
-    const node = new Node("terminal");
-    node.dom = terminal;
-
-    if (!this.root) {
-      this.root = node;
-      this.container.appendChild(terminal);
-      this.activeNode = node;
+    if (splitDirection === "vertical") {
+      container.classList.add("flex-row");
+    } else {
+      container.classList.add("flex-col");
     }
+
+    return container;
   }
 
   closeActiveTerminal() {
     if (!this.activeNode || this.activeNode.type !== "terminal") {
+      console.log("No active terminal to close");
       return;
     }
 
-    const nodeToRemove = this.activeNode;
-    this.removeNode(nodeToRemove);
+    this.removeNode(this.activeNode);
+    this.terminalCount--;
 
-    if (nodeToRemove.dom) {
-      nodeToRemove.dom.classList.add("closing");
-
-      const removeTerminal = () => {
-        if (nodeToRemove.dom) {
-          nodeToRemove.dom.remove();
-        }
-      };
-
-      const onAnimationEnd = () => {
-        removeTerminal();
-        clearTimeout(fallbackTimeout);
-      };
-
-      nodeToRemove.dom.addEventListener("animationend", onAnimationEnd, {
-        once: true,
-      });
-      nodeToRemove.dom.addEventListener("animationcancel", onAnimationEnd, {
-        once: true,
-      });
-
-      // Fallback: remove after animation duration + buffer
-      const fallbackTimeout = setTimeout(() => {
-        nodeToRemove.dom.removeEventListener("animationend", onAnimationEnd);
-        nodeToRemove.dom.removeEventListener("animationcancel", onAnimationEnd);
-        removeTerminal();
-      }, 500);
-
-      this.terminalCount--;
+    // Find next active terminal
+    const nextTerminal = this.findRightmostTerminal(this.root);
+    if (nextTerminal) {
+      this.activeNode = nextTerminal;
+      this.setActiveTerminal(nextTerminal.dom);
+    } else {
+      this.activeNode = null;
     }
   }
 
-  removeNode(node) {
-    if (!node.parent) {
+  removeNode(nodeToRemove) {
+    if (!nodeToRemove.parent) {
+      nodeToRemove.dom.remove();
       this.root = null;
       return;
+    }
+
+    const parent = nodeToRemove.parent;
+    const sibling = parent.left === nodeToRemove ? parent.right : parent.left;
+
+    nodeToRemove.dom.remove();
+
+    if (!parent.parent) {
+      this.root = sibling;
+      sibling.parent = null;
+
+      parent.dom.remove();
+      this.main.appendChild(sibling.dom);
+    } else {
+      const grandparent = parent.parent;
+      sibling.parent = grandparent;
+
+      if (grandparent.left === parent) {
+        grandparent.left = sibling;
+      } else {
+        grandparent.right = sibling;
+      }
+
+      const grandparentDOM = parent.dom.parentNode;
+      grandparentDOM.removeChild(parent.dom);
+      grandparentDOM.appendChild(sibling.dom);
     }
   }
 
