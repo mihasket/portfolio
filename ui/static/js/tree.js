@@ -17,7 +17,7 @@ export class WindowManager {
     this.root = null;
     this.activeNode = null;
     this.terminalCount = 0;
-    this.MAX_TERMINALS = 4;
+    this.MAX_TERMINALS = 6;
   }
 
   addTerminal() {
@@ -34,6 +34,11 @@ export class WindowManager {
       this.activeNode = newTerminalNode;
 
       this.setActiveTerminal(terminal);
+
+      requestAnimationFrame(() => {
+        terminal.style.opacity = "1";
+        terminal.style.transform = "scale(1)";
+      });
 
       return;
     }
@@ -80,6 +85,11 @@ export class WindowManager {
     parentDOM.appendChild(container);
 
     containerNode.dom = container;
+
+    requestAnimationFrame(() => {
+      newNode.dom.style.opacity = "1";
+      newNode.dom.style.transform = "scale(1)";
+    });
   }
 
   setActiveTerminal(terminal) {
@@ -131,6 +141,11 @@ export class WindowManager {
     const terminal = document.createElement("div");
     terminal.classList.add("terminal", "flex", "flex-1");
 
+    terminal.style.opacity = "0";
+    terminal.style.transform = "scale(0.8)";
+    terminal.style.transition =
+      "opacity 0.2s ease-out, transform 0.2s ease-out";
+
     terminal.appendChild(createZshPrompt());
 
     this.terminalCount++;
@@ -152,21 +167,25 @@ export class WindowManager {
 
   closeActiveTerminal() {
     if (!this.activeNode || this.activeNode.type !== "terminal") {
-      console.log("No active terminal to close");
       return;
     }
 
-    this.removeNode(this.activeNode);
-    this.terminalCount--;
+    const terminalToClose = this.activeNode;
+    terminalToClose.dom.style.opacity = "0";
+    terminalToClose.dom.style.transform = "scale(0.8)";
 
-    // Find next active terminal
-    const nextTerminal = this.findRightmostTerminal(this.root);
-    if (nextTerminal) {
-      this.activeNode = nextTerminal;
-      this.setActiveTerminal(nextTerminal.dom);
-    } else {
-      this.activeNode = null;
-    }
+    setTimeout(() => {
+      this.removeNode(terminalToClose);
+      this.terminalCount--;
+
+      const nextTerminal = this.findRightmostTerminal(this.root);
+      if (nextTerminal) {
+        this.activeNode = nextTerminal;
+        this.setActiveTerminal(nextTerminal.dom);
+      } else {
+        this.activeNode = null;
+      }
+    }, 200);
   }
 
   removeNode(nodeToRemove) {
