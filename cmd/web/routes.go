@@ -10,6 +10,7 @@ func (app *application) routes() http.Handler {
 
 	mux.HandleFunc("GET /{$}", app.home)
 	mux.HandleFunc("GET /projects/{$}", app.projects)
+	mux.HandleFunc("GET /terminal/{$}", app.terminal)
 
 	return app.recoverPanic(app.logRequests(commonHeaders(mux)))
 }

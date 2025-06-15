@@ -14,7 +14,7 @@
             {{template "waybar" .}}
         </header>
 
-        <main>
+        <main id="main" class="flex-center-100 items-stretch">
             {{template "main" .}}
         </main>
 
@@ -22,7 +22,7 @@
             {{template "mobile" .}}
         </div>
 
-        <script src='/static/js/main.js' type='text/javascript'></script>
+        <script type="module" src='/static/js/main.js'></script>
     </body>
 </html>
 {{end}}

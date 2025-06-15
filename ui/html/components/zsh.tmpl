@@ -1,6 +1,20 @@
 {{define "zsh"}}
-<p class="whitespace-pre-line p-0 m-0">
-    <span class="yellow">miha</span>@<span class="orange">mp3</span><span class="path blue"></span>
-    > {{if eq . "sfetch"}}<span class="green">{{ . }}</span> --latest-song{{else}}<span class="green">{{ . }}</span>{{end}}{{if eq . ""}}<span class="blinking-cursor"></span>{{end}}
-</p>
+    <div class="py-2">
+        <div class="flex p-0 m-0">
+            <span class="yellow">miha</span>
+            <span>@</span>
+            <span class="orange">mp3</span>
+            <span class="path blue pl-5"></span>
+        </div>
+        <div class="flex items-center">
+            <span>>&nbsp;</span>
+            <span class="green">{{ . }}</span>
+            {{if eq . "sfetch"}}
+                <span>&nbsp;--latest-song</span>
+            {{end}}
+            {{if eq . ""}}
+                <span class="blinking-cursor"></span>
+            {{end}}
+        </div>
+    </div>
 {{end}}
