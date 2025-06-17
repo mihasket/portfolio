@@ -94,10 +94,10 @@ export class WindowManager {
 
   setActiveTerminal(terminal) {
     document.querySelectorAll(".terminal").forEach((t) => {
-      t.style.borderColor = "#a4a9b3";
+      t.style.borderColor = "#bac2de";
     });
 
-    terminal.style.borderColor = "#88c0d0";
+    terminal.style.borderColor = "#f5e0dc";
     terminal.focus();
     this.activeNode = this.findNodeByElement(this.root, terminal);
   }

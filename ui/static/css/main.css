@@ -12,13 +12,12 @@
     display: none !important;
   }
 
-  body {
-    background-color: #2e3440 !important;
-    background-image: none !important;
-  }
-
   .mobile {
     padding: 2rem !important;
+    background-color: rgb(17, 17, 27, 0.8) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    height: 100% !important;
   }
 }
 
@@ -118,34 +117,48 @@ main {
   align-items: stretch !important;
 }
 
-.purple-span-icon {
-  color: #b48ead;
-  font-size: 28px;
-  margin-left: 10px;
+.display-none {
+  display: none !important;
 }
 
 .purple {
-  color: #b48ead !important;
+  color: #cba6f7 !important;
 }
 
 .yellow {
-  color: #ebcb8b !important;
+  color: #f9e2af !important;
 }
 
 .orange {
-  color: #d08770 !important;
+  color: #fab387 !important;
 }
 
 .blue {
-  color: #81a1c1 !important;
+  color: #b4befe !important;
+}
+
+.maroon {
+  color: #eba0ac !important;
+}
+
+.flamingo {
+  color: #f2cdcd !important;
+}
+
+.bg-flamingo {
+  background-color: #f2cdcd !important;
+}
+
+.red {
+  color: #f38ba8 !important;
 }
 
 .bg-blue {
-  background-color: #81a1c1 !important;
+  background-color: #74c7ec !important;
 }
 
 .green {
-  color: #a3be8c !important;
+  color: #a6e3a1 !important;
 }
 
 .bg-gray {
@@ -313,28 +326,28 @@ nav a:visited {
 
 .terminal {
   /* background-color: rgba(30, 34, 42, 0.8); */
-  background-color: rgba(20, 20, 15, 0.8);
+  background-color: rgb(17, 17, 27, 0.8);
   backdrop-filter: blur(20px); /* adds the blur behind */
   -webkit-backdrop-filter: blur(20px);
   border-style: solid;
-  border-color: #a4a9b3;
+  border-color: #bac2de;
   border-radius: 10px;
   margin: 10px;
   padding: 10px;
 }
 
 a:link {
-  color: #b48ead;
+  color: #f2cdcd;
   text-decoration: none;
 }
 
 a:visited {
-  color: #b48ead;
+  color: #f2cdcd;
   text-decoration: none;
 }
 
 a:hover {
-  color: #d49bd1;
+  color: #c2a5a5;
   text-decoration: underline;
 }
 
@@ -378,8 +391,19 @@ a:hover {
 }
 
 .tmux {
-  background-color: #5e81ac;
   padding: 5px 20px;
+  border-radius: 20px;
+}
+
+.tmux-div {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+  background-color: rgb(24, 24, 37, 0.4);
+}
+
+.tmux-text {
+  color: #45475a;
 }
 
 .display-img {
@@ -404,8 +428,7 @@ a:hover {
 
 #project-area {
   width: 100%;
-  /* background-color: rgba(30, 34, 42, 0.5); */
-  background-color: rgba(20, 20, 15, 0.5);
+  background-color: rgb(24, 24, 37, 0.6);
   border-style: solid;
   border-color: #191d2455;
   border-radius: 10px;
@@ -428,13 +451,6 @@ a:hover {
 
 .projectButton::hover {
   color: blue;
-}
-
-.tmux-div {
-  display: flex;
-  margin-top: 20px;
-  justify-content: space-between;
-  background-color: #434c5e;
 }
 
 .equalizer {
@@ -475,7 +491,7 @@ a:hover {
 .contribution-calendar {
   max-width: 750px;
   margin: 0 auto;
-  background-color: rgba(20, 20, 15, 0.8);
+  background-color: rgba(17, 17, 27, 0.8);
   padding: 24px;
   border-radius: 8px;
   margin-top: 30px;

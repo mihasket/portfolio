@@ -22,7 +22,8 @@
         {{else if eq .HtmlID "workspaces"}}
             <nav id="{{ .HtmlID }}" class="flex">
                 <a class="px-2" href="/">1</a>
-                <a class="px-2" href="/projects/">2</a>
+                <a class="px-2" href="/projects">2</a>
+                <a class="px-2" href="/terminal">3</a>
             </nav>
         {{else}}
             <div id="{{ .HtmlID }}" class="px-2">{{ .GetFormat }}</div>

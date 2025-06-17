@@ -149,18 +149,18 @@ func (app *application) generateTemplateData(waybar WaybarJSON, lastTrack *Recen
 	data.ModulesRight = sortModules(waybar.ModulesRight, waybar)
 
 	// If nil == /projects/ route
-	if lastTrack == nil {
-		return data
+	if lastTrack != nil {
+		data.LastFM = *lastTrack
+
+		if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 30 {
+			data.LastFM.RecentTracks.Track[0].Album.Text =
+				data.LastFM.RecentTracks.Track[0].Album.Text[0:30] + "..."
+		}
 	}
 
-	data.LastFM = *lastTrack
-
-	if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 30 {
-		data.LastFM.RecentTracks.Track[0].Album.Text =
-			data.LastFM.RecentTracks.Track[0].Album.Text[0:30] + "..."
+	if calendar != nil {
+		data.GithubCalendar = *calendar
 	}
-
-	data.GithubCalendar = *calendar
 
 	return data
 }

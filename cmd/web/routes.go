@@ -9,8 +9,8 @@ func (app *application) routes() http.Handler {
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
 
 	mux.HandleFunc("GET /{$}", app.home)
-	mux.HandleFunc("GET /projects/{$}", app.projects)
-	mux.HandleFunc("GET /terminal/{$}", app.terminal)
+	mux.HandleFunc("GET /projects", app.projects)
+	mux.HandleFunc("GET /terminal", app.terminal)
 
 	return app.recoverPanic(app.logRequests(commonHeaders(mux)))
 }
