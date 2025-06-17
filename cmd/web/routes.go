@@ -12,5 +12,7 @@ func (app *application) routes() http.Handler {
 	mux.HandleFunc("GET /projects", app.projects)
 	mux.HandleFunc("GET /terminal", app.terminal)
 
+	mux.HandleFunc("GET /templates/zsh", app.zshPromptTemplate)
+
 	return app.recoverPanic(app.logRequests(commonHeaders(mux)))
 }

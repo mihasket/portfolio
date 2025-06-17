@@ -1,4 +1,4 @@
-import { createZshPrompt } from "./helpers.js";
+import { zshPath, loadZshPrompt } from "./helpers.js";
 
 class Node {
   constructor(type = "terminal", splitDirection = null) {
@@ -20,8 +20,8 @@ export class WindowManager {
     this.MAX_TERMINALS = 6;
   }
 
-  addTerminal() {
-    const terminal = this.createTerminal();
+  async addTerminal(path) {
+    const terminal = await this.createTerminal();
     if (!terminal) return;
 
     const newTerminalNode = new Node("terminal");
@@ -40,6 +40,7 @@ export class WindowManager {
         terminal.style.transform = "scale(1)";
       });
 
+      zshPath(path);
       return;
     }
 
@@ -50,6 +51,7 @@ export class WindowManager {
     this.splitNode(nodeToSplit, newTerminalNode, splitDirection);
     this.activeNode = newTerminalNode;
     this.setActiveTerminal(newTerminalNode.dom);
+    zshPath(path);
   }
 
   splitNode(existingNode, newNode, splitDirection) {
@@ -132,7 +134,7 @@ export class WindowManager {
     );
   }
 
-  createTerminal() {
+  async createTerminal() {
     if (this.terminalCount >= this.MAX_TERMINALS) {
       console.log("Maximum terminals reached");
       return;
@@ -146,7 +148,16 @@ export class WindowManager {
     terminal.style.transition =
       "opacity 0.2s ease-out, transform 0.2s ease-out";
 
-    terminal.appendChild(createZshPrompt());
+    try {
+      const zsh = await loadZshPrompt();
+
+      // TODO: Find a way to make this better
+      const div = document.createElement("div");
+      div.innerHTML = zsh;
+      terminal.appendChild(div);
+    } catch (error) {
+      console.log(error);
+    }
 
     this.terminalCount++;
     return terminal;
@@ -222,7 +233,7 @@ export class WindowManager {
     }
   }
 
-  setupKeyboardShortcuts() {
+  setupKeyboardShortcuts(path) {
     let keyBuffer = "";
 
     document.addEventListener("keyup", (event) => {
@@ -237,7 +248,7 @@ export class WindowManager {
         keyBuffer = keyBuffer.slice(-2);
       }
 
-      this.handleShortcut(keyBuffer);
+      this.handleShortcut(keyBuffer, path);
 
       // Clear buffer after processing
       if (keyBuffer.length === 2) {
@@ -246,10 +257,10 @@ export class WindowManager {
     });
   }
 
-  handleShortcut(keys) {
+  handleShortcut(keys, path) {
     switch (keys) {
       case "ot": // Open terminal
-        this.addTerminal();
+        this.addTerminal(path);
         break;
       case "qt": // Quit terminal
         this.closeActiveTerminal();

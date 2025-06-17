@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"net/http"
 )
 
@@ -39,4 +40,18 @@ func (app *application) terminal(w http.ResponseWriter, r *http.Request) {
 	}
 
 	app.render(w, r, http.StatusOK, "terminal.tmpl", app.generateTemplateData(*waybar, nil, nil))
+}
+
+func (app *application) zshPromptTemplate(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+
+	ts, err := template.ParseFiles("./ui/html/components/zsh.tmpl")
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+
+	err = ts.ExecuteTemplate(w, "zsh", nil)
+	if err != nil {
+		app.serverError(w, r, err)
+	}
 }

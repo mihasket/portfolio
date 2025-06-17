@@ -1,44 +1,18 @@
 export function zshPath(path) {
   document.querySelectorAll(".path").forEach((el) => {
-    el.innerText = " " + (path === "/" ? "~" : path);
+    el.innerText = " " + (path === "/" ? "~" : "~" + path);
   });
 }
 
-export function createZshPrompt() {
-  const container = document.createElement("div");
-  container.classList.add("py-2");
+export async function loadZshPrompt() {
+  try {
+    const response = await fetch("/templates/zsh");
+    const html = await response.text();
 
-  const userLine = document.createElement("div");
-  userLine.classList.add("flex", "p-0", "m-0");
+    return html;
+  } catch (error) {
+    console.error("Failed to load zsh template:", error);
 
-  const userSpan = document.createElement("span");
-  userSpan.classList.add("yellow");
-  userSpan.textContent = "miha";
-
-  const atSpan = document.createElement("span");
-  atSpan.textContent = "@";
-
-  const hostSpan = document.createElement("span");
-  hostSpan.classList.add("orange");
-  hostSpan.textContent = "mp3";
-
-  const pathSpan = document.createElement("span");
-  pathSpan.classList.add("path", "blue", "pl-5");
-
-  userLine.append(userSpan, atSpan, hostSpan, pathSpan);
-
-  const inputLine = document.createElement("div");
-  inputLine.classList.add("flex", "items-center");
-
-  const label = document.createElement("span");
-  label.textContent = ">";
-
-  const cursor = document.createElement("span");
-  cursor.classList.add("blinking-cursor");
-
-  inputLine.append(label, cursor);
-
-  container.append(userLine, inputLine);
-
-  return container;
+    return null;
+  }
 }
