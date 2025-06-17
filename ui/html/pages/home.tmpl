@@ -17,37 +17,12 @@
             <div class="terminal h-100-p">
                 {{ template "zsh" "sfetch" }}
 
-                <div class="flex items-center">
-                    <img class="p-2 display-img" src="{{ (index (index .LastFM.RecentTracks.Track 0).Image 3).Text }}">
-                    <div class="p-2">
-                        <p><span class="blue">title</span>&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Name }}</p>
-                        <p><span class="blue">artist</span>&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Artist.Name }}</p>
-                        <p><span class="blue">album</span>&nbsp;&nbsp;&nbsp;{{ (index .LastFM.RecentTracks.Track 0).Album.Text }}</p>
-                        <div class="flex">
-                            {{ if (index .LastFM.RecentTracks.Track 0).Date.Text }}
-                                <div class="flex-center-everything">
-                                    <span class="blue">date&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    <span>{{ (index .LastFM.RecentTracks.Track 0).Date.Text }}</span>
-                                </div>
-                            {{ else }}
-                                <div class="flex-center-everything">
-                                    <span class="blue">date&nbsp;&nbsp;&nbsp;</span>
-                                    <div class="equalizer px-2">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                    <span>Currently listening! ^_^</span>
-                                </div>
-                            {{ end }}
-                        </div>
-                    </div>
-                </div>
+                {{ template "latestTrack" .LastFM }}
 
                 {{ template "zsh" "" }}
             </div>
             <div class="flex h-100-p">
-                <div class="terminal">
+                <div class="terminal w-100-p">
                     {{ template "zsh" "pfetch" }}
 <pre>   __
 -=(o '.       miha@mp3

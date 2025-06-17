@@ -1,18 +1,11 @@
 {{define "zsh"}}
     <div class="py-2">
         <div class="flex p-0 m-0">
-            <span class="yellow">mihasket</span>
-            <span class="path blue pl-5"></span>
+            <span class="path blue"></span>
         </div>
         <div class="flex items-center">
-            <span class="green">&nbsp;</span>
-            <span>{{ . }}</span>
-            {{if eq . "sfetch"}}
-                <span>&nbsp;--latest-song</span>
-            {{end}}
-            {{if eq . ""}}
-                <span class="blinking-cursor"></span>
-            {{end}}
+            <span class="maroon">&nbsp;</span>
+            <span class="green">{{ . }}</span>
         </div>
     </div>
 {{end}}
