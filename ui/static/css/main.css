@@ -12,12 +12,23 @@
     display: none !important;
   }
 
+  html {
+    height: 100% !important;
+  }
+
+  body {
+    min-height: 100% !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+
   .mobile {
     padding: 2rem !important;
     background-color: rgb(17, 17, 27, 0.8) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    height: 100% !important;
   }
 }
 
