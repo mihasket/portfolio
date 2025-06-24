@@ -1,11 +1,12 @@
 {{define "zsh"}}
-    <div class="py-2">
+    <div id="terminal-body" class="py-2">
         <div class="flex p-0 m-0">
             <span class="path blue"></span>
         </div>
         <div class="flex items-center">
             <span class="maroon">&nbsp;</span>
-            <span class="green">{{ . }}</span>
+            <input type="text" class="terminal-input green" id="terminal-input" autocomplete="off" spellcheck="false">
+            <span class="cursor" id="cursor"></span>
         </div>
     </div>
 {{end}}

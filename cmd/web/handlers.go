@@ -11,6 +11,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, r, err)
 	}
 
+	// TODO: Change the date, because lastFM returns GMT+0
 	lastTrack, err := app.fetchLastTrack()
 	if err != nil {
 		app.serverError(w, r, err)

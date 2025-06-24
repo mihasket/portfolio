@@ -562,3 +562,12 @@ a:hover {
 input {
   all: unset;
 }
+
+.command-output {
+  color: #000000;
+  padding: 10px;
+}
+
+.help-command {
+  color: #fab387;
+}
