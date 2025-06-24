@@ -289,7 +289,10 @@ main {
 
 .websiteInfo {
   max-width: 800px;
-  word-break: normal;
+  text-align: justify;
+  text-justify: inter-word;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .whitespace-pre-line {
