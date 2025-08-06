@@ -23,11 +23,11 @@ func (p PulseAudioModule) GetFormat() string {
 
 	if def, ok := p.FormatIcons["default"].([]any); ok && len(def) > 0 {
 		if icon, ok := def[0].(string); ok {
-			return icon + " 25"
+			return icon
 		}
 	}
 
-	return "  25"
+	return ""
 }
 
 type NetworkModule struct {
