@@ -4,9 +4,12 @@ export function zshPath(path) {
   });
 }
 
-export async function loadZshPrompt() {
+export async function loadZshPrompt(id) {
   try {
-    const response = await fetch("/templates/zsh");
+    const response = await fetch("/templates/zsh", {
+      method: "POST",
+      body: JSON.stringify({ id }),
+    });
     const html = await response.text();
 
     return html;

@@ -1,8 +1,8 @@
 export class Terminal {
-  constructor() {
-    this.input = document.getElementById("terminal-input");
-    this.body = document.getElementById("terminal-body");
-    this.cursor = document.getElementById("cursor");
+  constructor(inputId, bodyId, cursorId) {
+    this.input = document.getElementById(inputId);
+    this.body = document.getElementById(bodyId);
+    this.cursor = document.getElementById(cursorId);
     this.history = [];
     this.historyIndex = -1;
 
@@ -106,7 +106,7 @@ export class Terminal {
   addToOutput(command, className = "command-output") {
     const outputDiv = document.createElement("div");
     outputDiv.className = className;
-    outputDiv.textContent = command;
+    outputDiv.innerHTML = command;
     this.body.appendChild(outputDiv);
     this.scrollToBottom();
   }

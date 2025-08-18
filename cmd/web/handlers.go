@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"html/template"
+	"io"
 	"net/http"
 )
 
@@ -46,12 +48,25 @@ func (app *application) terminal(w http.ResponseWriter, r *http.Request) {
 func (app *application) zshPromptTemplate(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 
+	defer r.Body.Close()
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+
+	var zsh ZshData
+	err = json.Unmarshal(body, &zsh)
+	if err != nil {
+		app.serverError(w, r, err)
+	}
+
 	ts, err := template.ParseFiles("./ui/html/components/zsh.tmpl")
 	if err != nil {
 		app.serverError(w, r, err)
 	}
 
-	err = ts.ExecuteTemplate(w, "zsh", nil)
+	err = ts.ExecuteTemplate(w, "zsh", zsh.ID)
 	if err != nil {
 		app.serverError(w, r, err)
 	}

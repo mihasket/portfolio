@@ -157,3 +157,7 @@ type DayData struct {
 	Intensity string `json:"intensity"`
 	Count     int    `json:"count"`
 }
+
+type ZshData struct {
+	ID int `json:"id"`
+}

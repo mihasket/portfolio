@@ -1,4 +1,5 @@
 import { zshPath, loadZshPrompt } from "./helpers.js";
+import { Terminal } from "./terminal.js";
 
 class Node {
   constructor(type = "terminal", splitDirection = null) {
@@ -41,6 +42,15 @@ export class WindowManager {
       });
 
       zshPath(path);
+      await new Promise((r) => setTimeout(r, 2000));
+
+      const bash = new Terminal(
+        `terminal-input${this.terminalCount}`,
+        `terminal-body${this.terminalCount}`,
+        `cursor${this.terminalCount}`,
+      );
+      bash.init();
+
       return;
     }
 
@@ -52,6 +62,13 @@ export class WindowManager {
     this.activeNode = newTerminalNode;
     this.setActiveTerminal(newTerminalNode.dom);
     zshPath(path);
+
+    const bash = new Terminal(
+      `terminal-input${this.terminalCount}`,
+      `terminal-body${this.terminalCount}`,
+      `cursor${this.terminalCount}`,
+    );
+    bash.init();
   }
 
   splitNode(existingNode, newNode, splitDirection) {
@@ -149,7 +166,8 @@ export class WindowManager {
       "opacity 0.2s ease-out, transform 0.2s ease-out";
 
     try {
-      const zsh = await loadZshPrompt();
+      this.terminalCount++;
+      const zsh = await loadZshPrompt(this.terminalCount);
 
       // TODO: Find a way to make this better
       const div = document.createElement("div");
@@ -159,7 +177,6 @@ export class WindowManager {
       console.log(error);
     }
 
-    this.terminalCount++;
     return terminal;
   }
 
