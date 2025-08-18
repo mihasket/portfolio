@@ -82,6 +82,15 @@ func (w WorkspaceModule) GetFormat() string {
 	return w.Format
 }
 
+type CustomModule struct {
+	Format string `json:"format"`
+	HtmlID string
+}
+
+func (c CustomModule) GetFormat() string {
+	return c.Format
+}
+
 type WaybarJSON struct {
 	Layer         string           `json:"layer"`
 	Position      string           `json:"position"`
@@ -94,6 +103,8 @@ type WaybarJSON struct {
 	PulseAudio    PulseAudioModule `json:"pulseaudio"`
 	Network       NetworkModule    `json:"network"`
 	Clock         ClockModule      `json:"clock"`
+	DateIcon      CustomModule     `json:"custom/dateicon"`
+	LogoIcon      CustomModule     `json:"custom/logo"`
 	Window        WindowModule     `json:"hyprland/window"`
 	Workspace     WorkspaceModule  `json:"hyprland/workspaces"`
 }

@@ -63,6 +63,8 @@ func (app *application) fetchWaybar() (*WaybarJSON, error) {
 		return nil, err
 	}
 
+	fmt.Println(waybar)
+
 	return &waybar, nil
 }
 
@@ -135,6 +137,12 @@ func sortModules(m []string, waybar WaybarJSON) []Module {
 		case "hyprland/workspaces":
 			waybar.Workspace.HtmlID = "workspaces"
 			modules = append(modules, waybar.Workspace)
+		case "custom/dateicon":
+			waybar.DateIcon.HtmlID = "custom-dateicon"
+			modules = append(modules, waybar.DateIcon)
+		case "custom/logo":
+			waybar.LogoIcon.HtmlID = "custom-logo"
+			modules = append(modules, waybar.LogoIcon)
 		}
 	}
 

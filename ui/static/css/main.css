@@ -192,6 +192,11 @@ main {
   padding: 0 !important;
 }
 
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .p-2 {
   padding: 8px !important;
 }

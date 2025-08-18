@@ -8,7 +8,7 @@
             {{ template "modules" .ModulesCenter }}
         </div>
 
-        <div class="modules-right flex z-1">
+        <div class="modules-right flex z-1 py-0">
             {{ template "modules" .ModulesRight }}
         </div>
     </div>
@@ -17,8 +17,8 @@
 
 {{define "modules"}}
     {{range .}}
-        {{if eq .HtmlID "window"}}
-            <div id="{{ .HtmlID }}">{{template "title" .}} - Miha Šket 󰌽 </div>
+        {{if eq .HtmlID "custom-logo"}}
+            <div id="{{ .HtmlID }}">{{ .GetFormat }} {{template "title" .}} - Miha Šket</div>
         {{else if eq .HtmlID "workspaces"}}
             <nav id="{{ .HtmlID }}" class="flex">
                 <a class="px-2" href="/">1</a>
