@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 func (app *application) serverError(w http.ResponseWriter, r *http.Request, err error) {
@@ -90,6 +91,19 @@ func (app *application) fetchLastTrack() (*RecentTracksResponse, error) {
 		return nil, err
 	}
 
+	if (LastFmDate{}) != lastTrack.RecentTracks.Track[0].Date {
+		timestamp, err := lastTrack.RecentTracks.Track[0].Date.Uts.Int64()
+		if err != nil {
+			return nil, err
+		}
+
+		t := time.Unix(timestamp, 0).UTC()
+		loc := time.FixedZone("GMT+2", 2*60*60)
+		localTime := t.In(loc)
+
+		lastTrack.RecentTracks.Track[0].Date.Text = localTime.Format("02 Jan 2006, 15:04")
+	}
+
 	return &lastTrack, nil
 }
 
@@ -154,13 +168,14 @@ func (app *application) generateTemplateData(waybar WaybarJSON, lastTrack *Recen
 	data.ModulesCenter = sortModules(waybar.ModulesCenter, waybar)
 	data.ModulesRight = sortModules(waybar.ModulesRight, waybar)
 
+	// TODO: make this not so bad
 	// If nil == /projects/ route
 	if lastTrack != nil {
 		data.LastFM = *lastTrack
 
 		if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 30 {
 			data.LastFM.RecentTracks.Track[0].Album.Text =
-				data.LastFM.RecentTracks.Track[0].Album.Text[0:30] + "..."
+				data.LastFM.RecentTracks.Track[0].Album.Text[0:30] + " [...]"
 		}
 	}
 

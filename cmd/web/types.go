@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"strings"
 	"time"
 
@@ -121,6 +122,12 @@ type templateData struct {
 	GithubCalendar GitHubCalendarResponse
 }
 
+// Needed to check for empty date
+type LastFmDate struct {
+	Uts  json.Number `json:"uts"`
+	Text string      `json:"#text"`
+}
+
 type RecentTracksResponse struct {
 	RecentTracks struct {
 		Track []struct {
@@ -134,11 +141,8 @@ type RecentTracksResponse struct {
 			Album struct {
 				Text string `json:"#text"`
 			} `json:"album"`
-			Name string `json:"name"`
-			Date struct {
-				Uts  string `json:"uts"`
-				Text string `json:"#text"`
-			} `json:"date"`
+			Name string     `json:"name"`
+			Date LastFmDate `json:"date"`
 		} `json:"track"`
 	} `json:"recenttracks"`
 }
