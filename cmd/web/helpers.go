@@ -63,8 +63,6 @@ func (app *application) fetchWaybar() (*WaybarJSON, error) {
 		return nil, err
 	}
 
-	fmt.Println(waybar)
-
 	return &waybar, nil
 }
 
