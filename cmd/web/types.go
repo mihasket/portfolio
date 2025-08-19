@@ -19,15 +19,6 @@ type PulseAudioModule struct {
 }
 
 func (p PulseAudioModule) GetFormat() string {
-	//  TODO: Error handling
-	//  What to return if there was an error, maybe
-
-	if def, ok := p.FormatIcons["default"].([]any); ok && len(def) > 0 {
-		if icon, ok := def[0].(string); ok {
-			return icon
-		}
-	}
-
 	return ""
 }
 
@@ -156,8 +147,4 @@ type DayData struct {
 	Date      string `json:"date"`
 	Intensity string `json:"intensity"`
 	Count     int    `json:"count"`
-}
-
-type ZshData struct {
-	ID int `json:"id"`
 }

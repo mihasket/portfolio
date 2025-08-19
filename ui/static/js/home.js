@@ -1,5 +1,5 @@
-import { zshPath } from "./helpers.js";
-
 export function homePage(path) {
-  zshPath(path);
+  document.querySelectorAll(".path").forEach((el) => {
+    el.innerText = " " + (path === "/" ? "~" : "~" + path);
+  });
 }
