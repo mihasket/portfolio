@@ -18,10 +18,21 @@
 
   body {
     min-height: 100% !important;
-    background-attachment: fixed !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
+    background-image: linear-gradient(
+      to bottom,
+      #d67888,
+      #c3708b,
+      #ad698b,
+      #976389,
+      #805d84,
+      #79587d,
+      #715376,
+      #6a4e6f,
+      #6e4967,
+      #71445d,
+      #733f53,
+      #733b49
+    ) !important;
   }
 
   .mobile {
@@ -242,6 +253,10 @@ main {
 
 .h-100-p {
   height: 100% !important;
+}
+
+.h-lvh {
+  height: 100lvh;
 }
 
 .w-175px {
