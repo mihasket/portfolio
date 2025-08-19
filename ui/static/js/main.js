@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     homePage(path);
   } else if (path === "/projects") {
     projectsPage();
-  } else if (path === "/terminal") {
+  } else if (path === "/playground") {
     const windowManager = new WindowManager("main");
     windowManager.setupKeyboardShortcuts(path);
   }
