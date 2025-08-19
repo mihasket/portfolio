@@ -67,8 +67,8 @@ header {
 }
 
 main {
-  flex: 1; /* Take all remaining space */
-  min-height: 0; /* Important for overflow to work */
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -569,13 +569,4 @@ a:hover {
 
 input {
   all: unset;
-}
-
-.command-output {
-  color: #000000;
-  padding: 10px;
-}
-
-.help-command {
-  color: #fab387;
 }
