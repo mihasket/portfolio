@@ -61,12 +61,12 @@ func (app *application) zshPromptTemplate(w http.ResponseWriter, r *http.Request
 		app.serverError(w, r, err)
 	}
 
-	ts, err := template.ParseFiles("./ui/html/components/zsh.tmpl")
+	ts, err := template.ParseFiles("./ui/html/components/terminalZsh.tmpl")
 	if err != nil {
 		app.serverError(w, r, err)
 	}
 
-	err = ts.ExecuteTemplate(w, "zsh", zsh.ID)
+	err = ts.ExecuteTemplate(w, "terminalZsh", zsh.ID)
 	if err != nil {
 		app.serverError(w, r, err)
 	}
