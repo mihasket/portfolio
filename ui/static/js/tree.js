@@ -63,12 +63,12 @@ export class WindowManager {
     this.setActiveTerminal(newTerminalNode.dom);
     zshPath(path);
 
-    const bash = new Terminal(
+    const zsh = new Terminal(
       `terminal-input${this.terminalCount}`,
       `terminal-body${this.terminalCount}`,
       `cursor${this.terminalCount}`,
     );
-    bash.init();
+    zsh.init();
   }
 
   splitNode(existingNode, newNode, splitDirection) {
