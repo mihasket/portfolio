@@ -54,6 +54,7 @@ body {
 }
 
 body {
+  background-color: #66577e;
   background-image: url("https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/Wallpaper/wallpaper.png");
   background-size: cover;
   background-repeat: no-repeat;
