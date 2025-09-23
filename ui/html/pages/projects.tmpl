@@ -10,6 +10,8 @@
                     </p>
 
                     <div>
+                        {{ template "ProjectButton" "http-server.md" }}
+
                         {{ template "ProjectButton" "portfolio.md" }}
 
                         {{ template "ProjectButton" "mp3-tagger.md" }}
@@ -29,6 +31,27 @@
 
                         <div class="flex-center-x">
                             <img class="display-img max-w-50-p" src="/static/img/lain.jpg">
+                        </div>
+                    </div>
+
+                    <div id="http-server" class="project-content">
+                        <div class="flex-center">
+                            <a class="f-size-7" href="https://github.com/mihasket/http-server/" target="_blank">@http-server</a>
+                            <span class="flamingo f-size-10 ml-5"></span>
+                        </div>
+                        <p>Minimal implementation of an HTTP/1.1 server built directly on top of go TCP sockets.</p>
+                        <p>It follows the specifications in <a href="https://datatracker.ietf.org/doc/html/rfc9110" target="_blank">@RFC_9110</a> (HTTP Semantics) and <a href="https://datatracker.ietf.org/doc/html/rfc9112" target="_blank">@RFC_9112</a> (HTTP/1.1).</p>
+                        <p>The goal was to learn how HTTP, more specifically HTTP/1.1, works under the hood, without relying on higher-level libraries.</p>
+
+                        <p class="m-0">Most notable features:</p>
+                        <ul>
+                            <li>Custom handler function</li>
+                            <li>Concurrent request handling</li>
+                            <li>Chunked transfer encoding on HTTPbin proxy</li>
+                        </ul>
+
+                        <div class="flex-center-x">
+                            <img class="display-img" src="/static/img/http-server-example.png">
                         </div>
                     </div>
 

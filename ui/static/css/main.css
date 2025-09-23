@@ -200,6 +200,10 @@ main {
   padding-bottom: 0 !important;
 }
 
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+
 .p-2 {
   padding: 8px !important;
 }
@@ -392,7 +396,8 @@ a:hover {
 .terminal pre,
 .terminal a,
 .terminal input,
-.terminal span {
+.terminal span,
+.terminal li {
   font-size: 22px;
 }
 
