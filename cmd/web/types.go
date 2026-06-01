@@ -50,8 +50,7 @@ func (c ClockModule) GetFormat() string {
 		clockTime = strings.TrimSpace(c.Format[start+2 : end])
 	}
 
-	loc, _ := time.LoadLocation("Europe/Ljubljana")
-	now := time.Now().In(loc)
+	now := time.Now().UTC().Add(2 * time.Hour)
 
 	clockTime = timefmt.Format(now, clockTime)
 
