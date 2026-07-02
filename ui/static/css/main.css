@@ -453,6 +453,13 @@ a:hover {
   border-radius: 10px;
 }
 
+.display-img-sw {
+  height: auto;
+  max-width: 55%;
+  border: 0px solid;
+  border-radius: 10px;
+}
+
 .project-content {
   display: none;
 }
