@@ -162,25 +162,27 @@ func sortModules(m []string, waybar WaybarJSON) []Module {
 }
 
 func (app *application) generateTemplateData(waybar WaybarJSON, lastTrack *RecentTracksResponse, calendar *GitHubCalendarResponse) templateData {
-	var data templateData
+	data := templateData{
+		ModulesLeft:   sortModules(waybar.ModulesLeft, waybar),
+		ModulesCenter: sortModules(waybar.ModulesCenter, waybar),
+		ModulesRight:  sortModules(waybar.ModulesRight, waybar),
+	}
 
-	data.ModulesLeft = sortModules(waybar.ModulesLeft, waybar)
-	data.ModulesCenter = sortModules(waybar.ModulesCenter, waybar)
-	data.ModulesRight = sortModules(waybar.ModulesRight, waybar)
+	if lastTrack != nil && len(lastTrack.RecentTracks.Track) > 0 {
+		track := lastTrack.RecentTracks.Track[0]
 
-	// TODO: make this not so bad
-	// If nil == /projects/ route
-	if lastTrack != nil {
-		data.LastFM = *lastTrack
-
-		if len(data.LastFM.RecentTracks.Track[0].Album.Text) >= 30 {
-			data.LastFM.RecentTracks.Track[0].Album.Text =
-				data.LastFM.RecentTracks.Track[0].Album.Text[0:30] + " [...]"
+		if len(track.Album.Text) > 30 {
+			track.Album.Text = track.Album.Text[:30] + " [...]"
 		}
+
+		lastTrackCopy := *lastTrack
+		lastTrackCopy.RecentTracks.Track[0] = track
+
+		data.LastFM = &lastTrackCopy
 	}
 
 	if calendar != nil {
-		data.GithubCalendar = *calendar
+		data.GithubCalendar = calendar
 	}
 
 	return data

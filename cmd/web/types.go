@@ -110,8 +110,8 @@ type templateData struct {
 	ModulesLeft    []Module
 	ModulesCenter  []Module
 	ModulesRight   []Module
-	LastFM         RecentTracksResponse
-	GithubCalendar GitHubCalendarResponse
+	LastFM         *RecentTracksResponse
+	GithubCalendar *GitHubCalendarResponse
 }
 
 // Needed to check for empty date

@@ -7,7 +7,13 @@ import (
 
 func commonHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Security-Policy", "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net; img-src 'self' https://lastfm.freetls.fastly.net https://cdn.jsdelivr.net;")
+		csp := fmt.Sprintf(
+			"default-src 'self'; " +
+				"style-src 'self' 'nonce-%s' https://cdn.jsdelivr.net; " +
+				"script-src 'self' 'nonce-%s' https://cdn.jsdelivr.net; " +
+				"img-src 'self' https://lastfm.freetls.fastly.net https://cdn.jsdelivr.net;",
+		)
+		w.Header().Set("Content-Security-Policy", csp)
 
 		w.Header().Set("Referrer-Policy", "origin-when-cross-origin")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
