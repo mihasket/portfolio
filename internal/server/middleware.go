@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fmt"
@@ -9,8 +9,8 @@ func commonHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		csp := fmt.Sprintf(
 			"default-src 'self'; " +
-				"style-src 'self' 'nonce-%s' https://cdn.jsdelivr.net; " +
-				"script-src 'self' 'nonce-%s' https://cdn.jsdelivr.net; " +
+				"style-src 'self' https://cdn.jsdelivr.net; " +
+				"script-src 'self' https://cdn.jsdelivr.net; " +
 				"img-src 'self' https://lastfm.freetls.fastly.net https://cdn.jsdelivr.net;",
 		)
 		w.Header().Set("Content-Security-Policy", csp)
@@ -26,7 +26,7 @@ func commonHeaders(next http.Handler) http.Handler {
 	})
 }
 
-func (app *application) logRequests(next http.Handler) http.Handler {
+func (app *Application) logRequests(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var (
 			ip     = r.RemoteAddr
@@ -35,13 +35,13 @@ func (app *application) logRequests(next http.Handler) http.Handler {
 			uri    = r.URL.RequestURI()
 		)
 
-		app.logger.Info("received request", "ip", ip, "proto", proto, "method", method, "uri", uri)
+		app.Logger.Info("received request", "ip", ip, "proto", proto, "method", method, "uri", uri)
 
 		next.ServeHTTP(w, r)
 	})
 }
 
-func (app *application) recoverPanic(next http.Handler) http.Handler {
+func (app *Application) recoverPanic(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {

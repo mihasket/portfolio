@@ -1,7 +1,10 @@
-package main
+package waybar
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
 	"strings"
 	"time"
 
@@ -102,50 +105,83 @@ type WaybarJSON struct {
 	Workspace     WorkspaceModule  `json:"hyprland/workspaces"`
 }
 
-type templateData struct {
-	Layer          string
-	Position       string
-	Height         int
-	Width          int
-	ModulesLeft    []Module
-	ModulesCenter  []Module
-	ModulesRight   []Module
-	LastFM         *RecentTracksResponse
-	GithubCalendar *GitHubCalendarResponse
+type WaybarData struct {
+	Layer         string
+	Position      string
+	Height        int
+	Width         int
+	ModulesLeft   []Module
+	ModulesCenter []Module
+	ModulesRight  []Module
 }
 
-// Needed to check for empty date
-type LastFmDate struct {
-	Uts  json.Number `json:"uts"`
-	Text string      `json:"#text"`
+func buildModuleMap(w *WaybarJSON) map[string]Module {
+	w.Clock.HtmlID = "clock"
+	w.PulseAudio.HtmlID = "pulseaudio"
+	w.Network.HtmlID = "network"
+	w.Window.HtmlID = "window"
+	w.Workspace.HtmlID = "workspaces"
+	w.DateIcon.HtmlID = "custom-dateicon"
+	w.LogoIcon.HtmlID = "custom-logo"
+
+	return map[string]Module{
+		"clock":               w.Clock,
+		"pulseaudio":          w.PulseAudio,
+		"network":             w.Network,
+		"hyprland/window":     w.Window,
+		"hyprland/workspaces": w.Workspace,
+		"custom/dateicon":     w.DateIcon,
+		"custom/logo":         w.LogoIcon,
+	}
 }
 
-type RecentTracksResponse struct {
-	RecentTracks struct {
-		Track []struct {
-			Artist struct {
-				Name string `json:"#text"`
-			} `json:"artist"`
-			Image []struct {
-				Size string `json:"size"`
-				Text string `json:"#text"`
-			} `json:"image"`
-			Album struct {
-				Text string `json:"#text"`
-			} `json:"album"`
-			Name string     `json:"name"`
-			Date LastFmDate `json:"date"`
-		} `json:"track"`
-	} `json:"recenttracks"`
+func sortModules(names []string, moduleMap map[string]Module) []Module {
+	modules := make([]Module, 0, len(names))
+
+	for _, name := range names {
+		if m, ok := moduleMap[name]; ok {
+			modules = append(modules, m)
+		}
+	}
+
+	return modules
 }
 
-type GitHubCalendarResponse struct {
-	Total         int         `json:"total"`
-	Contributions [][]DayData `json:"contributions"`
-}
+func FetchWaybar() (*WaybarData, error) {
+	resp, err := http.Get("https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/.config/waybar/config.jsonc")
+	if err != nil {
+		return nil, err
+	}
 
-type DayData struct {
-	Date      string `json:"date"`
-	Intensity string `json:"intensity"`
-	Count     int    `json:"count"`
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status %d fetching waybar config", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var waybarJson WaybarJSON
+	err = json.Unmarshal(body, &waybarJson)
+
+	if err != nil {
+		return nil, err
+	}
+
+	moduleMap := buildModuleMap(&waybarJson)
+
+	waybar := WaybarData{
+		Layer:         waybarJson.Layer,
+		Position:      waybarJson.Position,
+		Height:        waybarJson.Height,
+		Width:         waybarJson.Width,
+		ModulesLeft:   sortModules(waybarJson.ModulesLeft, moduleMap),
+		ModulesCenter: sortModules(waybarJson.ModulesCenter, moduleMap),
+		ModulesRight:  sortModules(waybarJson.ModulesRight, moduleMap),
+	}
+
+	return &waybar, nil
 }
