@@ -24,6 +24,7 @@ func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Requ
 	gh, err := github.FetchGithubContribution("mihasket")
 	if err != nil {
 		app.serverError(w, r, err)
+		return
 	}
 
 	err = app.writeJSON(w, http.StatusOK, gh, nil)
@@ -36,6 +37,7 @@ func (app *Application) waybarHandler(w http.ResponseWriter, r *http.Request) {
 	waybar, err := waybar.FetchWaybar()
 	if err != nil {
 		app.serverError(w, r, err)
+		return
 	}
 
 	err = app.writeJSON(w, http.StatusOK, waybar, nil)
@@ -48,6 +50,7 @@ func (app *Application) lastFMHandler(w http.ResponseWriter, r *http.Request) {
 	lastFM, err := lastfm.FetchLastTrack(app.Config.LastFM)
 	if err != nil {
 		app.serverError(w, r, err)
+		return
 	}
 
 	err = app.writeJSON(w, http.StatusOK, lastFM, nil)

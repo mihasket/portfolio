@@ -5,37 +5,42 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 
 	"portfolio-dotfiles/internal/config"
 )
 
-// Needed to check for empty date
-type LastFmDate struct {
-	Uts  json.Number `json:"uts"`
-	Text string      `json:"#text"`
-}
-
-type RecentTracksResponse struct {
+type recentTracksResponse struct {
 	RecentTracks struct {
-		Track []struct {
-			Artist struct {
-				Name string `json:"#text"`
-			} `json:"artist"`
-			Image []struct {
-				Size string `json:"size"`
-				Text string `json:"#text"`
-			} `json:"image"`
-			Album struct {
-				Text string `json:"#text"`
-			} `json:"album"`
-			Name string     `json:"name"`
-			Date LastFmDate `json:"date"`
-		} `json:"track"`
+		Track []rawTrack `json:"track"`
 	} `json:"recenttracks"`
 }
 
-func FetchLastTrack(lastFM config.LastFM) (*RecentTracksResponse, error) {
+type rawTrack struct {
+	Artist struct {
+		Name string `json:"#text"`
+	} `json:"artist"`
+	Image []struct {
+		Size string `json:"size"`
+		Text string `json:"#text"`
+	} `json:"image"`
+	Album struct {
+		Text string `json:"#text"`
+	} `json:"album"`
+	Name string `json:"name"`
+	Date struct {
+		Uts json.Number `json:"uts"`
+	} `json:"date"`
+}
+
+type Track struct {
+	Name      string `json:"name"`
+	Artist    string `json:"artist"`
+	Album     string `json:"album"`
+	ImageURL  string `json:"imageUrl"`
+	Timestamp int64  `json:"timestamp"`
+}
+
+func FetchLastTrack(lastFM config.LastFM) (*Track, error) {
 	url := fmt.Sprintf(
 		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
 		lastFM.Username, lastFM.APIKey,
@@ -53,24 +58,42 @@ func FetchLastTrack(lastFM config.LastFM) (*RecentTracksResponse, error) {
 		return nil, err
 	}
 
-	var lastTrack RecentTracksResponse
-	err = json.Unmarshal(body, &lastTrack)
+	var raw recentTracksResponse
+	err = json.Unmarshal(body, &raw)
 	if err != nil {
 		return nil, err
 	}
 
-	if (LastFmDate{}) != lastTrack.RecentTracks.Track[0].Date {
-		timestamp, err := lastTrack.RecentTracks.Track[0].Date.Uts.Int64()
-		if err != nil {
-			return nil, err
-		}
-
-		t := time.Unix(timestamp, 0).UTC()
-		loc := time.FixedZone("GMT+2", 2*60*60)
-		localTime := t.In(loc)
-
-		lastTrack.RecentTracks.Track[0].Date.Text = localTime.Format("02 Jan 2006, 15:04")
+	if len(raw.RecentTracks.Track) == 0 {
+		return nil, fmt.Errorf("lastfm: no recent tracks returned")
 	}
 
-	return &lastTrack, nil
+	return mapTrack(raw.RecentTracks.Track[0]), nil
+}
+
+func mapTrack(t rawTrack) *Track {
+	track := &Track{
+		Name:     t.Name,
+		Artist:   t.Artist.Name,
+		Album:    t.Album.Text,
+		ImageURL: extraLargeImage(t.Image),
+	}
+
+	if ts, err := t.Date.Uts.Int64(); err == nil {
+		track.Timestamp = ts
+	}
+
+	return track
+}
+
+func extraLargeImage(images []struct {
+	Size string `json:"size"`
+	Text string `json:"#text"`
+}) string {
+	for _, img := range images {
+		if img.Size == "extralarge" {
+			return img.Text
+		}
+	}
+	return ""
 }
