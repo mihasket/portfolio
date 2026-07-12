@@ -11,23 +11,26 @@ import (
 	"github.com/itchyny/timefmt-go"
 )
 
+type Identifiable struct {
+	ID string `json:"id"`
+}
+
+type SimpleModule struct {
+	Identifiable
+	Format string `json:"format"`
+}
+
+func (s SimpleModule) GetFormat() string {
+	return s.Format
+}
+
 type Module interface {
 	GetFormat() string
 }
 
-type PulseAudioModule struct {
-	Format      string         `json:"format"`
-	FormatIcons map[string]any `json:"format-icons"`
-	HtmlID      string
-}
-
-func (p PulseAudioModule) GetFormat() string {
-	return ""
-}
-
 type NetworkModule struct {
+	Identifiable
 	Format string `json:"format-ethernet"`
-	HtmlID string
 }
 
 func (n NetworkModule) GetFormat() string {
@@ -35,8 +38,8 @@ func (n NetworkModule) GetFormat() string {
 }
 
 type ClockModule struct {
+	Identifiable
 	Format string `json:"format"`
-	HtmlID string
 }
 
 func (c ClockModule) GetFormat() string {
@@ -54,37 +57,19 @@ func (c ClockModule) GetFormat() string {
 	}
 
 	now := time.Now().UTC().Add(2 * time.Hour)
-
 	clockTime = timefmt.Format(now, clockTime)
 
 	return strings.Join([]string{clockIcon, clockTime}, " ")
 }
 
-type WindowModule struct {
-	Format string `json:"format"`
-	HtmlID string
+type PulseAudioModule struct {
+	Identifiable
+	Format      string         `json:"format"`
+	FormatIcons map[string]any `json:"format-icons"`
 }
 
-func (w WindowModule) GetFormat() string {
-	return w.Format
-}
-
-type WorkspaceModule struct {
-	Format string `json:"format"`
-	HtmlID string
-}
-
-func (w WorkspaceModule) GetFormat() string {
-	return w.Format
-}
-
-type CustomModule struct {
-	Format string `json:"format"`
-	HtmlID string
-}
-
-func (c CustomModule) GetFormat() string {
-	return c.Format
+func (p PulseAudioModule) GetFormat() string {
+	return ""
 }
 
 type WaybarJSON struct {
@@ -99,30 +84,30 @@ type WaybarJSON struct {
 	PulseAudio    PulseAudioModule `json:"pulseaudio"`
 	Network       NetworkModule    `json:"network"`
 	Clock         ClockModule      `json:"clock"`
-	DateIcon      CustomModule     `json:"custom/dateicon"`
-	LogoIcon      CustomModule     `json:"custom/logo"`
-	Window        WindowModule     `json:"hyprland/window"`
-	Workspace     WorkspaceModule  `json:"hyprland/workspaces"`
+	DateIcon      SimpleModule     `json:"custom/dateicon"`
+	LogoIcon      SimpleModule     `json:"custom/logo"`
+	Window        SimpleModule     `json:"hyprland/window"`
+	Workspace     SimpleModule     `json:"hyprland/workspaces"`
 }
 
 type WaybarData struct {
-	Layer         string
-	Position      string
-	Height        int
-	Width         int
-	ModulesLeft   []Module
-	ModulesCenter []Module
-	ModulesRight  []Module
+	Layer         string   `json:"layer"`
+	Position      string   `json:"position"`
+	Height        int      `json:"height"`
+	Width         int      `json:"width"`
+	ModulesLeft   []Module `json:"modulesLeft"`
+	ModulesCenter []Module `json:"modulesCenter"`
+	ModulesRight  []Module `json:"modulesRight"`
 }
 
 func buildModuleMap(w *WaybarJSON) map[string]Module {
-	w.Clock.HtmlID = "clock"
-	w.PulseAudio.HtmlID = "pulseaudio"
-	w.Network.HtmlID = "network"
-	w.Window.HtmlID = "window"
-	w.Workspace.HtmlID = "workspaces"
-	w.DateIcon.HtmlID = "custom-dateicon"
-	w.LogoIcon.HtmlID = "custom-logo"
+	w.Clock.ID = "clock"
+	w.PulseAudio.ID = "pulseaudio"
+	w.Network.ID = "network"
+	w.Window.ID = "window"
+	w.Workspace.ID = "workspaces"
+	w.DateIcon.ID = "custom-dateicon"
+	w.LogoIcon.ID = "custom-logo"
 
 	return map[string]Module{
 		"clock":               w.Clock,
@@ -166,7 +151,6 @@ func FetchWaybar() (*WaybarData, error) {
 
 	var waybarJson WaybarJSON
 	err = json.Unmarshal(body, &waybarJson)
-
 	if err != nil {
 		return nil, err
 	}
