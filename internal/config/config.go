@@ -7,6 +7,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type Waybar struct {
+	CDN string
+}
+
 type LastFM struct {
 	APIKey   string
 	Username string
@@ -16,6 +20,7 @@ type Config struct {
 	Addr   int
 	Env    string
 	LastFM LastFM
+	Waybar Waybar
 }
 
 func getEnv(key, fallback string) string {
@@ -45,6 +50,7 @@ func Load() (Config, error) {
 
 	cfg.LastFM.APIKey = os.Getenv("LAST_FM_API_KEY")
 	cfg.LastFM.Username = os.Getenv("LAST_FM_USERNAME")
+	cfg.Waybar.CDN = os.Getenv("WAYBAR_CDN")
 
 	return cfg, nil
 }

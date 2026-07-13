@@ -132,8 +132,8 @@ func sortModules(names []string, moduleMap map[string]Module) []Module {
 	return modules
 }
 
-func FetchWaybar() (*WaybarData, error) {
-	resp, err := http.Get("https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/.config/waybar/config.jsonc")
+func FetchWaybar(client *http.Client, cdn string) (*WaybarData, error) {
+	resp, err := client.Get(cdn)
 	if err != nil {
 		return nil, err
 	}

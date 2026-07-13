@@ -5,16 +5,19 @@ import (
 	"net/http"
 	"time"
 
+	"portfolio-dotfiles/internal/cache"
 	"portfolio-dotfiles/internal/config"
 	"portfolio-dotfiles/internal/github"
 	"portfolio-dotfiles/internal/logger"
+	"portfolio-dotfiles/internal/waybar"
 )
 
 type Application struct {
 	Config      config.Config
 	Logger      *slog.Logger
 	HTTPClient  *http.Client
-	GithubCache *github.Cache
+	GithubCache *cache.Cache[*github.Calendar]
+	WaybarCache *cache.Cache[*waybar.WaybarData]
 }
 
 func NewApplication() (*Application, error) {
@@ -25,10 +28,19 @@ func NewApplication() (*Application, error) {
 
 	client := &http.Client{Timeout: 5 * time.Second}
 
-	return &Application{
-		Config:      cfg,
-		Logger:      logger.New(cfg.Env),
-		HTTPClient:  client,
-		GithubCache: github.NewCache(client, 24*time.Hour),
-	}, nil
+	app := &Application{
+		Config:     cfg,
+		Logger:     logger.New(cfg.Env),
+		HTTPClient: client,
+	}
+
+	app.GithubCache = cache.New(24*time.Hour, func(username string) (*github.Calendar, error) {
+		return github.FetchGithubContribution(client, username)
+	})
+
+	app.WaybarCache = cache.New(2*time.Hour, func(cdn string) (*waybar.WaybarData, error) {
+		return waybar.FetchWaybar(client, app.Config.Waybar.CDN)
+	})
+
+	return app, nil
 }

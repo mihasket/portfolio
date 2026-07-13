@@ -3,7 +3,6 @@ package server
 import (
 	"net/http"
 	"portfolio-dotfiles/internal/lastfm"
-	"portfolio-dotfiles/internal/waybar"
 )
 
 func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +19,7 @@ func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 }
 
 func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Request) {
-	gh, err := app.GithubCache.GetContributions("mihasket")
+	gh, err := app.GithubCache.Get("mihasket")
 	if err != nil {
 		app.serverError(w, r, err)
 		return
@@ -33,7 +32,7 @@ func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Requ
 }
 
 func (app *Application) waybarHandler(w http.ResponseWriter, r *http.Request) {
-	waybar, err := waybar.FetchWaybar()
+	waybar, err := app.WaybarCache.Get(app.Config.Waybar.CDN)
 	if err != nil {
 		app.serverError(w, r, err)
 		return
