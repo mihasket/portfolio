@@ -2,7 +2,6 @@ package server
 
 import (
 	"net/http"
-	"portfolio-dotfiles/internal/github"
 	"portfolio-dotfiles/internal/lastfm"
 	"portfolio-dotfiles/internal/waybar"
 )
@@ -21,7 +20,7 @@ func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 }
 
 func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Request) {
-	gh, err := github.FetchGithubContribution("mihasket")
+	gh, err := app.GithubCache.GetContributions("mihasket")
 	if err != nil {
 		app.serverError(w, r, err)
 		return
