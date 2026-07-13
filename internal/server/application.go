@@ -8,6 +8,7 @@ import (
 	"portfolio-dotfiles/internal/cache"
 	"portfolio-dotfiles/internal/config"
 	"portfolio-dotfiles/internal/github"
+	"portfolio-dotfiles/internal/lastfm"
 	"portfolio-dotfiles/internal/logger"
 	"portfolio-dotfiles/internal/waybar"
 )
@@ -18,6 +19,7 @@ type Application struct {
 	HTTPClient  *http.Client
 	GithubCache *cache.Cache[*github.Calendar]
 	WaybarCache *cache.Cache[*waybar.WaybarData]
+	LastFMCache *cache.Cache[*lastfm.Track]
 }
 
 func NewApplication() (*Application, error) {
@@ -40,6 +42,10 @@ func NewApplication() (*Application, error) {
 
 	app.WaybarCache = cache.New(2*time.Hour, func(cdn string) (*waybar.WaybarData, error) {
 		return waybar.FetchWaybar(client, app.Config.Waybar.CDN)
+	})
+
+	app.LastFMCache = cache.New(30*time.Second, func(url string) (*lastfm.Track, error) {
+		return lastfm.FetchLastTrack(client, url)
 	})
 
 	return app, nil

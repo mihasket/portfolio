@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"portfolio-dotfiles/internal/config"
 )
 
 type recentTracksResponse struct {
@@ -40,13 +38,8 @@ type Track struct {
 	Timestamp int64  `json:"timestamp"`
 }
 
-func FetchLastTrack(lastFM config.LastFM) (*Track, error) {
-	url := fmt.Sprintf(
-		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
-		lastFM.Username, lastFM.APIKey,
-	)
-
-	resp, err := http.Get(url)
+func FetchLastTrack(client *http.Client, url string) (*Track, error) {
+	resp, err := client.Get(url)
 	if err != nil {
 		return nil, err
 	}

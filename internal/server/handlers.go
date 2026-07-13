@@ -1,8 +1,8 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
-	"portfolio-dotfiles/internal/lastfm"
 )
 
 func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,12 @@ func (app *Application) waybarHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Application) lastFMHandler(w http.ResponseWriter, r *http.Request) {
-	lastFM, err := lastfm.FetchLastTrack(app.Config.LastFM)
+	url := fmt.Sprintf(
+		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
+		app.Config.LastFM.Username, app.Config.LastFM.APIKey,
+	)
+
+	lastFM, err := app.LastFMCache.Get(url)
 	if err != nil {
 		app.serverError(w, r, err)
 		return
