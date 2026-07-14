@@ -6,41 +6,42 @@ import (
 )
 
 func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Request) {
-	data := map[string]string{
-		"status":      "available",
-		"environment": app.Config.Env,
+	env := envelope{
+		"status": "available",
+		"system_info": map[string]string{
+			"environment": app.Config.Env,
+		},
 	}
 
-	err := app.writeJSON(w, http.StatusOK, data, nil)
+	err := app.writeJSON(w, http.StatusOK, env, nil)
 	if err != nil {
-		app.Logger.Error(err.Error())
-		http.Error(w, "The server encountered a problem and could not process your request", http.StatusInternalServerError)
+		app.serverErrorResponse(w, r, err)
 	}
 }
 
 func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Request) {
 	gh, err := app.GithubCache.Get("mihasket")
 	if err != nil {
-		app.serverError(w, r, err)
+		app.serverErrorResponse(w, r, err)
 		return
 	}
 
-	err = app.writeJSON(w, http.StatusOK, gh, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"github": gh}, nil)
 	if err != nil {
-		app.serverError(w, r, err)
+		app.serverErrorResponse(w, r, err)
 	}
 }
 
 func (app *Application) waybarHandler(w http.ResponseWriter, r *http.Request) {
 	waybar, err := app.WaybarCache.Get(app.Config.Waybar.CDN)
 	if err != nil {
-		app.serverError(w, r, err)
+		app.serverErrorResponse(w, r, err)
 		return
 	}
 
-	err = app.writeJSON(w, http.StatusOK, waybar, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"waybar": waybar}, nil)
 	if err != nil {
-		app.serverError(w, r, err)
+		app.serverErrorResponse(w, r, err)
 	}
 }
 
@@ -52,12 +53,12 @@ func (app *Application) lastFMHandler(w http.ResponseWriter, r *http.Request) {
 
 	lastFM, err := app.LastFMCache.Get(url)
 	if err != nil {
-		app.serverError(w, r, err)
+		app.serverErrorResponse(w, r, err)
 		return
 	}
 
-	err = app.writeJSON(w, http.StatusOK, lastFM, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"lastFM": lastFM}, nil)
 	if err != nil {
-		app.serverError(w, r, err)
+		app.serverErrorResponse(w, r, err)
 	}
 }

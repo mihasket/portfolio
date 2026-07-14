@@ -5,21 +5,13 @@ import (
 	"net/http"
 )
 
-func (app *Application) serverError(w http.ResponseWriter, r *http.Request, err error) {
-	var (
-		method = r.Method
-		uri    = r.URL.RequestURI()
-	)
-
-	app.Logger.Error(err.Error(), "method", method, "uri", uri)
-	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+type errorResponse struct {
+	Error string `json:"error"`
 }
 
-func (app *Application) clientError(w http.ResponseWriter, status int) {
-	http.Error(w, http.StatusText(status), status)
-}
+type envelope map[string]any
 
-func (app *Application) writeJSON(w http.ResponseWriter, status int, data any, headers http.Header) error {
+func (app *Application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
 	js, err := json.Marshal(data)
 	if err != nil {
 		return err
