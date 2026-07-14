@@ -9,7 +9,7 @@ func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 	env := envelope{
 		"status": "available",
 		"system_info": map[string]string{
-			"environment": app.Config.Env,
+			"environment": app.config.Env,
 		},
 	}
 
@@ -20,7 +20,7 @@ func (app *Application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 }
 
 func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Request) {
-	gh, err := app.GithubCache.Get("mihasket")
+	gh, err := app.githubCache.Get("mihasket")
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -33,7 +33,7 @@ func (app *Application) githubContribHandler(w http.ResponseWriter, r *http.Requ
 }
 
 func (app *Application) waybarHandler(w http.ResponseWriter, r *http.Request) {
-	waybar, err := app.WaybarCache.Get(app.Config.Waybar.CDN)
+	waybar, err := app.waybarCache.Get(app.config.Waybar.CDN)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
@@ -48,10 +48,10 @@ func (app *Application) waybarHandler(w http.ResponseWriter, r *http.Request) {
 func (app *Application) lastFMHandler(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf(
 		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
-		app.Config.LastFM.Username, app.Config.LastFM.APIKey,
+		app.config.LastFM.Username, app.config.LastFM.APIKey,
 	)
 
-	lastFM, err := app.LastFMCache.Get(url)
+	lastFM, err := app.lastFMCache.Get(url)
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return

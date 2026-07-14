@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-func (app *Application) RegisterRoutes() http.Handler {
+func (app *Application) registerRoutes() http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(app.recoverPanic)
