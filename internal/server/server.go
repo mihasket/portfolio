@@ -10,7 +10,7 @@ import (
 )
 
 func NewServer() (*http.Server, error) {
-	app, err := NewApplication()
+	app, err := newApplication()
 	if err != nil {
 		return nil, err
 	}

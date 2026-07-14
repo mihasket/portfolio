@@ -22,7 +22,7 @@ type application struct {
 	lastFMCache *cache.Cache[*lastfm.Track]
 }
 
-func NewApplication() (*application, error) {
+func newApplication() (*application, error) {
 	cfg, err := config.Load()
 	if err != nil {
 		return nil, err
