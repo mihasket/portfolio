@@ -8,6 +8,8 @@ import (
 
 func (app *Application) RegisterRoutes() http.Handler {
 	r := chi.NewRouter()
+
+	r.Use(app.recoverPanic)
 	r.Use(app.logRequests)
 	r.Use(commonHeaders)
 

@@ -41,16 +41,16 @@ func (app *Application) logRequests(next http.Handler) http.Handler {
 	})
 }
 
-/*func (app *Application) recoverPanic(next http.Handler) http.Handler {
+func (app *Application) recoverPanic(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
-			if err := recover(); err != nil {
+			pv := recover()
+			if pv != nil {
 				w.Header().Set("Connection", "close")
-
-				app.serverError(w, r, fmt.Errorf("%s", err))
+				app.serverErrorResponse(w, r, fmt.Errorf("%v", pv))
 			}
 		}()
 
 		next.ServeHTTP(w, r)
 	})
-}*/
+}
