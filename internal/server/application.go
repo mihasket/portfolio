@@ -30,9 +30,12 @@ func NewApplication() (*Application, error) {
 
 	client := &http.Client{Timeout: 5 * time.Second}
 
+	appLogger := logger.New(cfg.Env)
+	slog.SetDefault(appLogger)
+
 	app := &Application{
 		config:     cfg,
-		Logger:     logger.New(cfg.Env),
+		Logger:     appLogger,
 		httpClient: client,
 	}
 

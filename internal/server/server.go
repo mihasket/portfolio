@@ -9,10 +9,10 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-func NewServer() (*http.Server, *Application, error) {
+func NewServer() (*http.Server, error) {
 	app, err := NewApplication()
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	srv := &http.Server{
@@ -24,5 +24,5 @@ func NewServer() (*http.Server, *Application, error) {
 		WriteTimeout: 30 * time.Second,
 	}
 
-	return srv, app, nil
+	return srv, nil
 }
