@@ -11,7 +11,7 @@ type errorResponse struct {
 
 type envelope map[string]any
 
-func (app *Application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
+func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
 	js, err := json.Marshal(data)
 	if err != nil {
 		return err

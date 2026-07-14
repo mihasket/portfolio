@@ -26,7 +26,7 @@ func commonHeaders(next http.Handler) http.Handler {
 	})
 }
 
-func (app *Application) logRequests(next http.Handler) http.Handler {
+func (app *application) logRequests(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var (
 			ip     = r.RemoteAddr
@@ -35,13 +35,13 @@ func (app *Application) logRequests(next http.Handler) http.Handler {
 			uri    = r.URL.RequestURI()
 		)
 
-		app.Logger.Info("received request", "ip", ip, "proto", proto, "method", method, "uri", uri)
+		app.logger.Info("received request", "ip", ip, "proto", proto, "method", method, "uri", uri)
 
 		next.ServeHTTP(w, r)
 	})
 }
 
-func (app *Application) recoverPanic(next http.Handler) http.Handler {
+func (app *application) recoverPanic(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			pv := recover()

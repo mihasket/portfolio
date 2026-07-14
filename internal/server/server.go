@@ -18,7 +18,7 @@ func NewServer() (*http.Server, error) {
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", app.config.Addr),
 		Handler:      app.registerRoutes(),
-		ErrorLog:     slog.NewLogLogger(app.Logger.Handler(), slog.LevelError),
+		ErrorLog:     slog.NewLogLogger(app.logger.Handler(), slog.LevelError),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,

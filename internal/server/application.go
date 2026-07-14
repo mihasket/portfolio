@@ -13,16 +13,16 @@ import (
 	"portfolio-dotfiles/internal/waybar"
 )
 
-type Application struct {
+type application struct {
 	config      config.Config
-	Logger      *slog.Logger
+	logger      *slog.Logger
 	httpClient  *http.Client
 	githubCache *cache.Cache[*github.Calendar]
 	waybarCache *cache.Cache[*waybar.WaybarData]
 	lastFMCache *cache.Cache[*lastfm.Track]
 }
 
-func NewApplication() (*Application, error) {
+func NewApplication() (*application, error) {
 	cfg, err := config.Load()
 	if err != nil {
 		return nil, err
@@ -33,9 +33,9 @@ func NewApplication() (*Application, error) {
 	appLogger := logger.New(cfg.Env)
 	slog.SetDefault(appLogger)
 
-	app := &Application{
+	app := &application{
 		config:     cfg,
-		Logger:     appLogger,
+		logger:     appLogger,
 		httpClient: client,
 	}
 
