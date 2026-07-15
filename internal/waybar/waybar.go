@@ -11,72 +11,88 @@ import (
 	"github.com/itchyny/timefmt-go"
 )
 
-type Identifiable struct {
-	ID string `json:"id"`
-}
+type Module interface{}
 
 type SimpleModule struct {
-	Identifiable
 	Format string `json:"format"`
-}
-
-func (s SimpleModule) GetFormat() string {
-	return s.Format
-}
-
-type Module interface {
-	GetFormat() string
 }
 
 type NetworkModule struct {
-	Identifiable
 	Format string `json:"format-ethernet"`
 }
 
-func (n NetworkModule) GetFormat() string {
-	return n.Format
+func (n NetworkModule) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Format string `json:"format"`
+	}{
+		Format: n.Format,
+	})
 }
 
 type ClockModule struct {
-	Identifiable
-	Format string `json:"format"`
+	SimpleModule
 }
 
-func (c ClockModule) GetFormat() string {
+func (c *ClockModule) ResolveFormat() {
 	var (
-		clockIcon string
-		clockTime string
+		icon   string
+		layout string
 	)
 
 	start := strings.Index(c.Format, "{")
 	end := strings.Index(c.Format, "}")
 
 	if start != -1 && end != -1 && start < end {
-		clockIcon = strings.TrimSpace(c.Format[:start])
-		clockTime = strings.TrimSpace(c.Format[start+2 : end])
+		icon = strings.TrimSpace(c.Format[:start])
+		layout = strings.TrimSpace(c.Format[start+2 : end])
 	}
 
 	now := time.Now().UTC().Add(2 * time.Hour)
-	clockTime = timefmt.Format(now, clockTime)
-
-	return strings.Join([]string{clockIcon, clockTime}, " ")
+	c.Format = strings.Join([]string{
+		icon,
+		timefmt.Format(now, layout),
+	}, " ")
 }
 
 type PulseAudioModule struct {
-	Identifiable
-	Format      string         `json:"format"`
+	SimpleModule
 	FormatIcons map[string]any `json:"format-icons"`
 }
 
-func (p PulseAudioModule) GetFormat() string {
-	return ""
+func (p PulseAudioModule) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Format string `json:"format"`
+	}{
+		Format: getIcon(p.FormatIcons, "headphone"),
+	})
+}
+
+type WorkspaceModule struct {
+	SimpleModule
+	FormatIcons map[string]any `json:"format-icons"`
+}
+
+func (w WorkspaceModule) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Format       string `json:"format"`
+		FormatActive string `json:"format-active"`
+	}{
+		Format:       getIcon(w.FormatIcons, "1"),
+		FormatActive: getIcon(w.FormatIcons, "active"),
+	})
+}
+
+func getIcon(icons map[string]any, key string) string {
+	if value, ok := icons[key].(string); ok {
+		return value
+	}
+
+	return ""
 }
 
 type WaybarJSON struct {
 	Layer         string           `json:"layer"`
-	Position      string           `json:"position"`
 	Height        int              `json:"height"`
-	Width         int              `json:"width"`
 	ModulesLeft   []string         `json:"modules-left"`
 	ModulesCenter []string         `json:"modules-center"`
 	ModulesRight  []string         `json:"modules-right"`
@@ -86,50 +102,34 @@ type WaybarJSON struct {
 	Clock         ClockModule      `json:"clock"`
 	DateIcon      SimpleModule     `json:"custom/dateicon"`
 	LogoIcon      SimpleModule     `json:"custom/logo"`
-	Window        SimpleModule     `json:"hyprland/window"`
-	Workspace     SimpleModule     `json:"hyprland/workspaces"`
+	Workspace     WorkspaceModule  `json:"hyprland/workspaces"`
 }
 
 type WaybarData struct {
-	Layer         string   `json:"layer"`
-	Position      string   `json:"position"`
-	Height        int      `json:"height"`
-	Width         int      `json:"width"`
-	ModulesLeft   []Module `json:"modulesLeft"`
-	ModulesCenter []Module `json:"modulesCenter"`
-	ModulesRight  []Module `json:"modulesRight"`
+	Layer  string `json:"layer"`
+	Height int    `json:"height"`
+
+	Modules map[string]Module `json:"modules"`
+	Layout  Layout            `json:"layout"`
 }
 
-func buildModuleMap(w *WaybarJSON) map[string]Module {
-	w.Clock.ID = "clock"
-	w.PulseAudio.ID = "pulseaudio"
-	w.Network.ID = "network"
-	w.Window.ID = "window"
-	w.Workspace.ID = "workspaces"
-	w.DateIcon.ID = "custom-dateicon"
-	w.LogoIcon.ID = "custom-logo"
+type Layout struct {
+	Left   []string `json:"left"`
+	Center []string `json:"center"`
+	Right  []string `json:"right"`
+}
+
+func buildModules(w *WaybarJSON) map[string]Module {
+	w.Clock.ResolveFormat()
 
 	return map[string]Module{
 		"clock":               w.Clock,
-		"pulseaudio":          w.PulseAudio,
 		"network":             w.Network,
-		"hyprland/window":     w.Window,
+		"pulseaudio":          w.PulseAudio,
 		"hyprland/workspaces": w.Workspace,
 		"custom/dateicon":     w.DateIcon,
 		"custom/logo":         w.LogoIcon,
 	}
-}
-
-func sortModules(names []string, moduleMap map[string]Module) []Module {
-	modules := make([]Module, 0, len(names))
-
-	for _, name := range names {
-		if m, ok := moduleMap[name]; ok {
-			modules = append(modules, m)
-		}
-	}
-
-	return modules
 }
 
 func FetchWaybar(client *http.Client, cdn string) (*WaybarData, error) {
@@ -155,17 +155,18 @@ func FetchWaybar(client *http.Client, cdn string) (*WaybarData, error) {
 		return nil, err
 	}
 
-	moduleMap := buildModuleMap(&waybarJson)
+	modules := buildModules(&waybarJson)
 
-	waybar := WaybarData{
-		Layer:         waybarJson.Layer,
-		Position:      waybarJson.Position,
-		Height:        waybarJson.Height,
-		Width:         waybarJson.Width,
-		ModulesLeft:   sortModules(waybarJson.ModulesLeft, moduleMap),
-		ModulesCenter: sortModules(waybarJson.ModulesCenter, moduleMap),
-		ModulesRight:  sortModules(waybarJson.ModulesRight, moduleMap),
-	}
+	return &WaybarData{
+		Layer:  waybarJson.Layer,
+		Height: waybarJson.Height,
 
-	return &waybar, nil
+		Modules: modules,
+
+		Layout: Layout{
+			Left:   waybarJson.ModulesLeft,
+			Center: waybarJson.ModulesCenter,
+			Right:  waybarJson.ModulesRight,
+		},
+	}, nil
 }
