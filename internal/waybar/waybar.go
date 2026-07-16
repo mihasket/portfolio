@@ -75,7 +75,7 @@ type WorkspaceModule struct {
 func (w WorkspaceModule) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		Format       string `json:"format"`
-		FormatActive string `json:"format-active"`
+		FormatActive string `json:"formatActive"`
 	}{
 		Format:       getIcon(w.FormatIcons, "1"),
 		FormatActive: getIcon(w.FormatIcons, "active"),

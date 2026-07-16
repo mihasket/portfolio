@@ -1,1 +1,13 @@
 @import 'tailwindcss';
+
+@font-face {
+    font-family: 'JetBrainsMono Nerd Font';
+    src: url('/fonts/JetBrainsMonoNLNerdFontPropo-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+* {
+    font-family: 'JetBrainsMono Nerd Font', monospace, sans-serif;
+    font-weight: 600;
+}
