@@ -7,7 +7,88 @@
     font-style: normal;
 }
 
+@theme {
+    --font-mono: 'JetBrainsMono Nerd Font', monospace, sans-serif;
+
+    --color-purple: #cba6f7;
+    --color-yellow: #f9e2af;
+    --color-orange: #fab387;
+    --color-blue: #8aadf4;
+    --color-maroon: #eba0ac;
+    --color-flamingo: #f2cdcd;
+    --color-red: #f38ba8;
+    --color-green: #a6e3a1;
+    --color-nord-white: #eceff4;
+
+    --color-bg-blue: #74c7ec;
+    --color-bg-gray: #4c566a;
+    --color-bg-flamingo: #f2cdcd;
+}
+
 * {
     font-family: 'JetBrainsMono Nerd Font', monospace, sans-serif;
     font-weight: 600;
+    font-size: initial;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #66577e;
+    background-image: url('https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/Wallpaper/wallpaper.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+@media (max-width: 1024px) {
+    main,
+    header {
+        display: none !important;
+    }
+
+    html {
+        height: 100%;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    body {
+        min-height: 100%;
+        height: 100%;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile {
+        @apply p-8 bg-neutral-950/80 backdrop-blur-xl;
+    }
+}
+
+@media (min-width: 1025px) {
+    .mobile {
+        display: none;
+    }
+}
+
+@layer components {
+    .terminal {
+        @apply bg-neutral-950/80 backdrop-blur-xl border border-[#414749] rounded-xl m-1 p-4 px-8 max-h-full overflow-y-auto;
+    }
+
+    .mobile {
+        @apply bg-neutral-950/80 backdrop-blur-xl;
+    }
+
+    .homeMainDiv {
+        @apply overflow-y-auto;
+    }
 }

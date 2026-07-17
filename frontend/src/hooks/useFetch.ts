@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react';
-import type { WaybarData } from '../types/waybar';
 import { tryCatch, fetchJson } from '../types/result';
 
 const API_URL = import.meta.env.DEV ? '' : import.meta.env.VITE_API_URL;
 
-export function useWaybar() {
-    const [data, setData] = useState<WaybarData | null>(null);
+export function useFetch<T>(endpoint: string) {
+    const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const controller = new AbortController();
 
-        async function fetchWaybar() {
+        async function fetchData() {
             setLoading(true);
 
             const result = await tryCatch(
-                fetchJson<WaybarData>(`${API_URL}/api/v1/waybar`, {
+                fetchJson<T>(`${API_URL}${endpoint}`, {
                     signal: controller.signal,
                 })
             );
@@ -35,12 +34,12 @@ export function useWaybar() {
             setLoading(false);
         }
 
-        fetchWaybar();
+        fetchData();
 
         return () => {
             controller.abort();
         };
-    }, []);
+    }, [endpoint]);
 
     return { data, error, loading };
 }

@@ -9,7 +9,7 @@ interface LayoutProps {
 export default function Layout({ title, children }: LayoutProps) {
     return (
         <>
-            <title>{`${title} - user`}</title>
+            <title>{`${title} - Miha Šket`}</title>
 
             <header>
                 <Waybar pageTitle={title} />

@@ -1,4 +1,5 @@
-import { useWaybar } from '../../hooks/useWaybar';
+import { useFetch } from '../../hooks/useFetch';
+import type { WaybarData } from '../../types/waybar';
 import Modules from '../waybar/Modules';
 
 interface WaybarProps {
@@ -6,7 +7,7 @@ interface WaybarProps {
 }
 
 export default function Waybar({ pageTitle }: WaybarProps) {
-    const { data, loading, error } = useWaybar();
+    const { data, loading, error } = useFetch<WaybarData>('/api/v1/waybar');
 
     if (loading || error || !data) return null;
 
