@@ -1,11 +1,12 @@
 import Zsh from '../terminal/Zsh';
+import Information from '../terminal/Information';
 
 export default function Home() {
     return (
-        <div className="flex-1 flex w-full h-full overflow-y-auto">
+        <div className="text-white flex-1 flex w-full h-full overflow-y-auto">
             <div className="flex w-full">
                 <div className="terminal w-full">
-                    {/*<Information title="desktop" />*/}
+                    <Information />
 
                     <Zsh command="github-contribution" />
 
