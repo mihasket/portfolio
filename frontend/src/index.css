@@ -1,110 +1,118 @@
-@import url('https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/.config/waybar/style.css');
-
 @import 'tailwindcss';
 
 @font-face {
-    font-family: 'JetBrainsMono Nerd Font';
-    src: url('/fonts/JetBrainsMonoNLNerdFontPropo-SemiBold.woff2') format('woff2');
-    font-weight: 600;
+    font-family: 'BigBlue437 Nerd Font';
+    src: url('/fonts/BigBlueTerm437NerdFont-Regular.woff2') format('woff2');
+    font-weight: 400;
     font-style: normal;
 }
 
-@layer utilities {
-    * {
-        font-size: inherit;
-    }
-
-    #workspaces button,
-    #workspaces button label,
-    #pulseaudio,
-    #network,
-    #custom-dateicon,
-    #custom-logo {
-        font-size: inherit;
-    }
-}
-
+/* Theme is Catppuccin Mocha */
 @theme {
-    --font-mono: 'JetBrainsMono Nerd Font', monospace, sans-serif;
+    --color-mauve: #8839ef;
+    --color-mauve-bright: #ac74f4;
+    --color-mauve-dark: #802bee;
 
-    --color-purple: #cba6f7;
     --color-yellow: #f9e2af;
-    --color-orange: #fab387;
-    --color-blue: #8aadf4;
+    --color-peach: #fab387;
     --color-maroon: #eba0ac;
     --color-flamingo: #f2cdcd;
     --color-red: #f38ba8;
     --color-green: #a6e3a1;
-    --color-nord-white: #eceff4;
 
-    --color-bg-blue: #74c7ec;
-    --color-bg-gray: #4c566a;
-    --color-bg-flamingo: #f2cdcd;
+    --color-bg: #11111b;
 }
 
 * {
-    font-family: 'JetBrainsMono Nerd Font', monospace, sans-serif;
-    font-weight: 600;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
+    font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
 }
 
 body {
-    background-color: #66577e;
-    background-image: url('https://cdn.jsdelivr.net/gh/mihasket/dotfiles@master/Wallpaper/wallpaper.png');
-    background-size: cover;
+    background-color: var(--color-bg);
+}
+
+#title {
+    font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
+    font-size: 72px;
+    color: transparent;
+
     background-repeat: no-repeat;
-    background-position: center;
+    background-size: 300% 100%;
+    background-image: linear-gradient(
+        95deg,
+        var(--color-mauve) 0%,
+        var(--color-mauve) 40%,
+        var(--color-mauve-dark) 40%,
+        var(--color-mauve-dark) 45%,
+        var(--color-mauve) 45%,
+        var(--color-mauve) 50%,
+        var(--color-mauve-bright) 50%,
+        var(--color-mauve-bright) 55%,
+        var(--color-mauve) 55%,
+        var(--color-mauve) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
 
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    clip-path: inset(0 100% 0 0);
+    animation:
+        reveal-clip 1.8s linear forwards,
+        sweep-glow 1.8s linear forwards;
 }
 
-@media (max-width: 1024px) {
-    main,
-    header {
-        display: none !important;
+@keyframes reveal-clip {
+    0% {
+        clip-path: inset(0 100% 0 0);
     }
-
-    html {
-        height: 100%;
-        background-size: cover;
-        overflow: hidden;
+    61.11% {
+        clip-path: inset(0 0% 0 0);
     }
-
-    body {
-        min-height: 100%;
-        height: 100%;
-        overflow: scroll;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .mobile {
-        @apply p-8 bg-neutral-950/80 backdrop-blur-xl;
+    100% {
+        clip-path: inset(0 0% 0 0);
     }
 }
 
-@media (min-width: 1025px) {
-    .mobile {
-        display: none;
+@keyframes sweep-glow {
+    0% {
+        background-position-x: 82.5%;
+    }
+    61.11% {
+        background-position-x: 32.5%;
+    }
+    100% {
+        background-position-x: 5%;
     }
 }
 
-@layer components {
-    .terminal {
-        @apply bg-neutral-950/80 backdrop-blur-xl border border-[#414749] rounded-xl m-1 p-4 px-8 max-h-full overflow-y-auto;
-    }
+#intro-wrapper {
+    animation: fade-out 0.5s linear forwards;
+    animation-delay: 4.8s;
+}
 
-    .mobile {
-        @apply bg-neutral-950/80 backdrop-blur-xl;
-    }
+#subtitle {
+    opacity: 0;
+    animation: fade-in 0.3s linear forwards;
+    animation-delay: 0.5s;
+}
 
-    .homeMainDiv {
-        @apply overflow-y-auto;
+#title {
+    animation-delay: 1.2s, 1.2s; /* delays both reveal-clip and sweep-glow */
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }
