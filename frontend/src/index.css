@@ -25,15 +25,21 @@
 
 * {
     font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
+    color: white;
 }
 
 body {
     background-color: var(--color-bg);
 }
 
-#title {
+#title,
+.startup-title-static {
     font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
     font-size: 72px;
+}
+
+/* Intro-only title animation */
+#title {
     color: transparent;
 
     background-repeat: no-repeat;
@@ -51,22 +57,53 @@ body {
         var(--color-mauve) 55%,
         var(--color-mauve) 100%
     );
+
     background-clip: text;
     -webkit-background-clip: text;
 
     clip-path: inset(0 100% 0 0);
+
     animation:
         reveal-clip 1.8s linear forwards,
         sweep-glow 1.8s linear forwards;
+
+    animation-delay: 1.2s, 1.2s;
 }
+
+/* Static version */
+.startup-title-static {
+    color: var(--color-mauve);
+}
+
+/* Intro wrapper animation */
+#intro-wrapper {
+    animation: fade-out 0.5s linear forwards;
+    animation-delay: 4.5s;
+}
+
+/* Intro subtitle animation */
+#subtitle {
+    opacity: 0;
+    animation: fade-in 0.3s linear forwards;
+    animation-delay: 0.5s;
+}
+
+/* Static subtitle */
+.startup-subtitle-static {
+    opacity: 1;
+}
+
+/* Animation keyframes */
 
 @keyframes reveal-clip {
     0% {
         clip-path: inset(0 100% 0 0);
     }
+
     61.11% {
         clip-path: inset(0 0% 0 0);
     }
+
     100% {
         clip-path: inset(0 0% 0 0);
     }
@@ -76,27 +113,19 @@ body {
     0% {
         background-position-x: 82.5%;
     }
+
     61.11% {
         background-position-x: 32.5%;
     }
+
     100% {
         background-position-x: 5%;
     }
 }
 
-#intro-wrapper {
-    animation: fade-out 0.5s linear forwards;
-    animation-delay: 4.8s;
-}
-
-#subtitle {
+#content {
     opacity: 0;
     animation: fade-in 0.3s linear forwards;
-    animation-delay: 0.5s;
-}
-
-#title {
-    animation-delay: 1.2s, 1.2s; /* delays both reveal-clip and sweep-glow */
 }
 
 @keyframes fade-in {
@@ -114,5 +143,86 @@ body {
     }
     to {
         opacity: 0;
+    }
+}
+
+.starfield {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-bg);
+
+    /* far layer: 300px tile, small dim stars */
+    background-image:
+        radial-gradient(1px 1px at 20px 30px, rgb(255 255 255 / 0.6), transparent),
+        radial-gradient(1px 1px at 90px 140px, rgb(255 255 255 / 0.5), transparent),
+        radial-gradient(1px 1px at 160px 60px, rgb(200 220 255 / 0.6), transparent),
+        radial-gradient(1px 1px at 230px 210px, rgb(255 255 255 / 0.5), transparent),
+        radial-gradient(1px 1px at 270px 100px, rgb(255 240 210 / 0.5), transparent),
+        radial-gradient(1px 1px at 50px 250px, rgb(255 255 255 / 0.6), transparent),
+        radial-gradient(1px 1px at 130px 280px, rgb(200 220 255 / 0.5), transparent);
+    background-size: 300px 300px;
+}
+
+.starfield::before,
+.starfield::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* mid layer: 400px tile */
+.starfield::before {
+    background-image:
+        radial-gradient(1.5px 1.5px at 40px 70px, rgb(255 255 255 / 0.85), transparent),
+        radial-gradient(1.5px 1.5px at 210px 30px, rgb(200 220 255 / 0.8), transparent),
+        radial-gradient(1.5px 1.5px at 330px 180px, rgb(255 255 255 / 0.8), transparent),
+        radial-gradient(1.5px 1.5px at 120px 260px, rgb(255 240 210 / 0.8), transparent),
+        radial-gradient(1.5px 1.5px at 280px 340px, rgb(255 255 255 / 0.85), transparent),
+        radial-gradient(1.5px 1.5px at 10px 360px, rgb(200 220 255 / 0.8), transparent);
+    background-size: 400px 400px;
+    animation: stars-drift-mid 240s linear infinite;
+}
+
+/* near layer: 600px tile, bigger stars, twinkling */
+.starfield::after {
+    background-image:
+        radial-gradient(2.2px 2.2px at 80px 120px, #fff, transparent),
+        radial-gradient(2px 2px at 380px 60px, rgb(200 220 255), transparent),
+        radial-gradient(2.2px 2.2px at 520px 300px, #fff, transparent),
+        radial-gradient(2px 2px at 200px 450px, rgb(255 240 210), transparent),
+        radial-gradient(2.4px 2.4px at 450px 540px, #fff, transparent);
+    background-size: 600px 600px;
+    animation:
+        stars-drift-near 120s linear infinite,
+        stars-twinkle 5s ease-in-out infinite alternate;
+}
+
+/* drift by exactly one tile width so the loop is seamless */
+@keyframes stars-drift-mid {
+    to {
+        background-position: -400px 0;
+    }
+}
+@keyframes stars-drift-near {
+    to {
+        background-position: -600px 0;
+    }
+}
+
+@keyframes stars-twinkle {
+    from {
+        opacity: 0.55;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .starfield::before,
+    .starfield::after {
+        animation: none;
     }
 }

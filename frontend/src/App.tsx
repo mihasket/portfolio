@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import Startup from './Startup';
 
 function App() {
-    const time = new Date().getFullYear();
     const [showIntro, setShowIntro] = useState(true);
 
     useEffect(() => {
@@ -10,20 +10,16 @@ function App() {
     }, []);
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <main className="starfield flex justify-center items-center h-screen">
             {showIntro ? (
-                <div id="intro-wrapper">
-                    <h1 id="title">Hello World</h1>
-                    <p id="subtitle" className="text-white text-2xl text-center">
-                        est. {time}
-                    </p>
-                </div>
+                <Startup />
             ) : (
-                <div>
-                    <p className="text-white text-2xl text-center">testing</p>
+                <div className="content flex">
+                    <Startup isIntro={false} />
+                    <p className=" content text-2xl">menu</p>
                 </div>
             )}
-        </div>
+        </main>
     );
 }
 
