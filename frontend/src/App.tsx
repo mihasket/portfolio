@@ -3,6 +3,7 @@ import Startup from './Startup';
 import Terminal from './ui/Terminal';
 import Zsh from './ui/Zsh';
 import StatusBar from './ui/StatusBar';
+import Calendar from './ui/Calendar';
 
 function App() {
     const [showIntro, setShowIntro] = useState(true);
@@ -53,6 +54,10 @@ function App() {
                                 <p className="text-xl pt-4">
                                     This website is made with Go and React
                                 </p>
+
+                                <Zsh command="github-contribution" />
+
+                                <Calendar />
                             </Terminal>
                         </div>
 
@@ -62,7 +67,6 @@ function App() {
                             </Terminal>
                         </div>
 
-                        {/* Right bottom: stacked on mobile, split left/right on desktop */}
                         <div className="contents md:grid md:min-h-0 md:grid-cols-2 md:grid-rows-1">
                             <div className="md:overflow-auto p-2 lg:p-1.5 lg:pt-1 lg:pr-1">
                                 <Terminal>
