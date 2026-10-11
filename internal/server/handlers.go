@@ -32,19 +32,6 @@ func (app *application) githubContribHandler(w http.ResponseWriter, r *http.Requ
 	}
 }
 
-func (app *application) waybarHandler(w http.ResponseWriter, r *http.Request) {
-	waybar, err := app.waybarCache.Get(app.config.Waybar.CDN)
-	if err != nil {
-		app.serverErrorResponse(w, r, err)
-		return
-	}
-
-	err = app.writeJSON(w, http.StatusOK, envelope{"waybar": waybar}, nil)
-	if err != nil {
-		app.serverErrorResponse(w, r, err)
-	}
-}
-
 func (app *application) lastFMHandler(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf(
 		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",

@@ -19,7 +19,6 @@ func (app *application) registerRoutes() http.Handler {
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Get("/healthcheck", app.healthcheckHandler)
 		r.Get("/github", app.githubContribHandler)
-		r.Get("/waybar", app.waybarHandler)
 		r.Get("/lastfm", app.lastFMHandler)
 	})
 
