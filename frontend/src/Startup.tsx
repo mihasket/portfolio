@@ -1,28 +1,10 @@
-interface StartupProps {
-    isIntro?: boolean;
-}
-
-export default function Startup({ isIntro = true }: StartupProps) {
+export default function Startup() {
     const time = new Date().getFullYear();
 
     return (
-        <div
-            id={isIntro ? 'intro-wrapper' : undefined}
-            className={isIntro ? undefined : 'startup-static'}
-        >
-            <h1
-                id={isIntro ? 'title' : undefined}
-                className={isIntro ? undefined : 'startup-title-static'}
-            >
-                Hello World
-            </h1>
-
-            <p
-                id={isIntro ? 'subtitle' : undefined}
-                className={`text-white text-2xl text-center ${
-                    isIntro ? '' : 'startup-subtitle-static'
-                }`}
-            >
+        <div id="intro-wrapper">
+            <h1 id="title">Hello World</h1>
+            <p id="subtitle" className="text-white text-2xl text-center">
                 est. {time}
             </p>
         </div>

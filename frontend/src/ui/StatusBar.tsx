@@ -20,7 +20,7 @@ export default function StatusBar() {
     const [date] = useState<string>(() => formatStatusDate(new Date()));
 
     return (
-        <header className="bg-statusbar sticky top-0 z-10 flex h-10 w-full shrink-0 items-center justify-between md:static text-xl">
+        <header className="bg-statusbar sticky top-0 z-10 flex h-10 w-full shrink-0 items-center justify-between md:static md:text-xl">
             <div className="px-4">
                 <span className="pr-3">󰌽</span>
                 <span>Home</span>

@@ -7,6 +7,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'JetBrainsMono Nerd Font';
+    src: url('/fonts/JetBrainsMonoNLNerdFontPropo-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
 /* Theme is Catppuccin Mocha */
 @theme {
     --color-mauve: #8839ef;
@@ -19,23 +26,55 @@
     --color-flamingo: #f2cdcd;
     --color-red: #f38ba8;
     --color-green: #a6e3a1;
+    --color-blue: #89b4fa;
 
     --color-bg: #11111b;
+
+    --background-image-wallpaper: linear-gradient(
+        135deg,
+        #d9898f 0%,
+        #d97e96 25%,
+        #823d52 50%,
+        #655174 75%,
+        #1c1e2d 100%
+    );
+
+    --color-statusbar: rgba(44, 44, 46, 0.8);
+}
+
+html {
+    background-color: #1c1e2d;
+}
+
+.grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 * {
-    font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
-    color: white;
+    font-family: 'JetBrainsMono Nerd Font', monospace, sans-serif;
 }
 
 body {
+    color: white;
+    font-weight: 600;
     background-color: var(--color-bg);
 }
 
 #title,
 .startup-title-static {
     font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
+    font-weight: 400;
     font-size: 72px;
+}
+
+#subtitle {
+    font-family: 'BigBlue437 Nerd Font', monospace, sans-serif;
+    font-weight: 400;
 }
 
 /* Intro-only title animation */
@@ -225,4 +264,18 @@ body {
     .starfield::after {
         animation: none;
     }
+}
+
+.terminal {
+    background-color: rgb(17, 17, 27, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-style: solid;
+    border-width: 3px;
+    border-color: #45475a;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+
+    max-height: 100%;
+    overflow-y: auto;
 }
