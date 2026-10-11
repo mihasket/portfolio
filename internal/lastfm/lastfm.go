@@ -31,11 +31,12 @@ type rawTrack struct {
 }
 
 type Track struct {
-	Name      string `json:"name"`
-	Artist    string `json:"artist"`
-	Album     string `json:"album"`
-	ImageURL  string `json:"imageUrl"`
-	Timestamp int64  `json:"timestamp"`
+	Name           string `json:"name"`
+	Artist         string `json:"artist"`
+	Album          string `json:"album"`
+	ImageUrlLarge  string `json:"imageUrlLarge"`
+	ImageUrlMedium string `json:"imageUrlMedium"`
+	Timestamp      int64  `json:"timestamp"`
 }
 
 func FetchLastTrack(client *http.Client, url string) (*Track, error) {
@@ -66,10 +67,11 @@ func FetchLastTrack(client *http.Client, url string) (*Track, error) {
 
 func mapTrack(t rawTrack) *Track {
 	track := &Track{
-		Name:     t.Name,
-		Artist:   t.Artist.Name,
-		Album:    t.Album.Text,
-		ImageURL: extraLargeImage(t.Image),
+		Name:           t.Name,
+		Artist:         t.Artist.Name,
+		Album:          t.Album.Text,
+		ImageUrlLarge:  extraLargeImage(t.Image),
+		ImageUrlMedium: mediumImage(t.Image),
 	}
 
 	if ts, err := t.Date.Uts.Int64(); err == nil {
@@ -85,6 +87,18 @@ func extraLargeImage(images []struct {
 }) string {
 	for _, img := range images {
 		if img.Size == "extralarge" {
+			return img.Text
+		}
+	}
+	return ""
+}
+
+func mediumImage(images []struct {
+	Size string `json:"size"`
+	Text string `json:"#text"`
+}) string {
+	for _, img := range images {
+		if img.Size == "medium" {
 			return img.Text
 		}
 	}

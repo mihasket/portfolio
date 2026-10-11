@@ -4,6 +4,7 @@ import Terminal from './ui/Terminal';
 import Zsh from './ui/Zsh';
 import StatusBar from './ui/StatusBar';
 import Calendar from './ui/Calendar';
+import CurrentSong from './ui/CurrentSong';
 
 function App() {
     const [showIntro, setShowIntro] = useState(true);
@@ -58,12 +59,18 @@ function App() {
                                 <Zsh command="github-contribution" />
 
                                 <Calendar />
+
+                                <Zsh command="" />
                             </Terminal>
                         </div>
 
                         <div className="md:overflow-auto p-2 lg:pl-1 lg:p-1.5">
                             <Terminal>
                                 <Zsh command="currentsong" />
+
+                                <CurrentSong />
+
+                                <Zsh command="" />
                             </Terminal>
                         </div>
 
