@@ -34,6 +34,7 @@ func gracefulShutdown(apiServer *http.Server, done chan bool) {
 func main() {
 	server, err := server.NewServer()
 	if err != nil {
+		slog.Error("failed to create server", "error", err)
 		os.Exit(1)
 	}
 

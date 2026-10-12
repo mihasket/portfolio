@@ -4,3 +4,7 @@ tmp/
 .air.toml
 .gitignore
 .env*
+
+frontend/node_modules
+frontend/dist
+frontend/.env
