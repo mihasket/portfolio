@@ -27,8 +27,8 @@ WORKDIR /app
 COPY --from=backend /app/main .
 COPY --from=frontend /frontend/dist ./frontend/dist
 
-ENV GO_PORT=8080 \
-    APP_ENV=production
+ENV ADDR=8080 \
+    ENV=production
 
 EXPOSE 8080
 CMD ["./main"]
