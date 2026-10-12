@@ -5,8 +5,16 @@ import Zsh from './ui/Zsh';
 import StatusBar from './ui/StatusBar';
 import Calendar from './ui/Calendar';
 import CurrentSong from './ui/CurrentSong';
+import Projects from './ui/Projects';
 
 function App() {
+    const PFETCH_ART = String.raw`   __
+-=(o '.       miha@mp3
+   '.-.\      os      Golang
+   /|  \\     host    miha
+   '|  ||     ascii   snd
+    _\_):,_   bar     waybar`;
+
     const [showIntro, setShowIntro] = useState(true);
 
     useEffect(() => {
@@ -46,15 +54,13 @@ function App() {
                                     <span className="pl-3">󰁥</span>
                                 </div>
 
-                                <div className="text-xl pt-4">
+                                <div className="text-xl py-4">
                                     <p>Software developer from Maribor, Slovenia.</p>
                                     <p>Currently learning Go, Rust and C.</p>
                                     <p>Love lifting weights and reading.</p>
                                 </div>
 
-                                <p className="text-xl pt-4">
-                                    This website is made with Go and React
-                                </p>
+                                <Projects />
 
                                 <Zsh command="github-contribution" />
 
@@ -78,11 +84,15 @@ function App() {
                             <div className="md:overflow-auto p-2 lg:p-1.5 lg:pt-1 lg:pr-1">
                                 <Terminal>
                                     <Zsh command="pfetch" />
+                                    <pre className="text-lg">{PFETCH_ART}</pre>
+                                    <Zsh command="" />
                                 </Terminal>
                             </div>
                             <div className="md:overflow-auto p-2 lg:p-1.5 lg:pt-1 lg:pl-1">
                                 <Terminal>
                                     <Zsh command="slime-gif" />
+                                    <img src="/img/slime.gif" alt="Moving slime" />
+                                    <Zsh command="" />
                                 </Terminal>
                             </div>
                         </div>
