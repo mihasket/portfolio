@@ -54,7 +54,6 @@ export default function CurrentSong() {
 
     return (
         <div className="flex items-center gap-3 p-3 text-sm md:gap-0 md:p-0 md:text-xl">
-            {/* Image */}
             <div className="shrink-0 md:p-2">
                 {data?.imageUrlLarge ? (
                     <picture>
@@ -75,8 +74,7 @@ export default function CurrentSong() {
                 )}
             </div>
 
-            {/* Info */}
-            <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)] gap-x-4 md:flex-none md:grid-cols-[auto_1fr] md:p-2">
+            <div className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)] gap-x-4 lg:gap-y-4 md:flex-none md:grid-cols-[auto_1fr] md:p-2">
                 <span className="hidden text-blue md:block">title</span>
                 <span className="truncate font-semibold md:overflow-visible md:whitespace-normal md:font-normal">
                     {data?.name}
