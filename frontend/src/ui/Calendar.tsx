@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CalendarSkeleton } from './CalendarSkeleton';
 
 interface DayData {
     date: string;
@@ -39,7 +40,7 @@ export default function Calendar() {
     }, []);
 
     if (error) return <p>Failed to load contributions: {error}</p>;
-    if (!data) return null;
+    if (!data) return <CalendarSkeleton />;
 
     return (
         <div className="contribution-calendar">

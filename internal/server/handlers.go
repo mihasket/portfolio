@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -33,10 +32,7 @@ func (app *application) githubContribHandler(w http.ResponseWriter, r *http.Requ
 }
 
 func (app *application) lastFMHandler(w http.ResponseWriter, r *http.Request) {
-	url := fmt.Sprintf(
-		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
-		app.config.LastFM.Username, app.config.LastFM.APIKey,
-	)
+	url := app.lastFMURL()
 
 	lastFM, err := app.lastFMCache.Get(url)
 	if err != nil {

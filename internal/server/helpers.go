@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -31,4 +32,13 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data envelo
 	w.Write(js)
 
 	return nil
+}
+
+func (app *application) lastFMURL() string {
+	url := fmt.Sprintf(
+		"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&format=json&limit=1",
+		app.config.LastFM.Username, app.config.LastFM.APIKey,
+	)
+
+	return url
 }

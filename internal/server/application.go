@@ -45,5 +45,17 @@ func newApplication() (*application, error) {
 		return lastfm.FetchLastTrack(client, url)
 	})
 
+	go func() {
+		if _, err := app.githubCache.Get("mihasket"); err != nil {
+			slog.Error("failed to warm github cache", "error", err)
+		}
+	}()
+
+	go func() {
+		if _, err := app.lastFMCache.Get(app.lastFMURL()); err != nil {
+			slog.Error("failed to warm lastfm cache", "error", err)
+		}
+	}()
+
 	return app, nil
 }
